@@ -3,7 +3,7 @@ package net.effize.bandlog.domain.user.model;
 import java.time.Instant;
 
 public class User {
-    private Long id;
+    private UserId id;
 
     private Email email;
 
