@@ -3,10 +3,10 @@ package net.effize.bandlog.domain.user.model;
 import net.effize.bandlog.domain.user.exception.PasswordMalformedException;
 import net.effize.bandlog.domain.user.exception.PasswordTooShortException;
 
-public class Password {
+public class RawPassword {
     private String value;
 
-    private Password(String value) {
+    private RawPassword(String value) {
         if (!isLengthValid(value)) {
             throw new PasswordTooShortException();
         }
@@ -16,8 +16,8 @@ public class Password {
         this.value = value;
     }
 
-    public static Password of(String value) {
-        return new Password(value);
+    public static RawPassword of(String value) {
+        return new RawPassword(value);
     }
 
     private boolean isLengthValid(String password) {

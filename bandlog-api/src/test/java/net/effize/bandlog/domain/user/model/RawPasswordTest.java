@@ -7,14 +7,14 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class PasswordTest {
+class RawPasswordTest {
     @Test
     public void 비밀번호는_8자_이상_그리고_영대소문자_숫자_특수문자를_포함하면_생성되어야_한다() {
         // arrange
         String input = "Test123!";
 
         // act
-        Password password = Password.of(input);
+        RawPassword password = RawPassword.of(input);
 
         // assert
         assertThat(password).isNotNull();
@@ -27,7 +27,7 @@ class PasswordTest {
 
         // act & assert
         assertThatThrownBy(() -> {
-            Password password = Password.of(input);
+            RawPassword password = RawPassword.of(input);
         }).isInstanceOf(PasswordTooShortException.class);
     }
 
@@ -38,7 +38,7 @@ class PasswordTest {
 
         // act & assert
         assertThatThrownBy(() -> {
-            Password password = Password.of(input);
+            RawPassword password = RawPassword.of(input);
         }).isInstanceOf(PasswordMalformedException.class);
     }
 }
