@@ -1,5 +1,7 @@
 package net.effize.bandlog.domain.user.model;
 
+import net.effize.bandlog.domain.user.exception.PasswordMalformedException;
+import net.effize.bandlog.domain.user.exception.PasswordTooShortException;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,7 +28,7 @@ class PasswordTest {
         // act & assert
         assertThatThrownBy(() -> {
             Password password = Password.of(input);
-        }).isInstanceOf(RuntimeException.class);
+        }).isInstanceOf(PasswordTooShortException.class);
     }
 
     @Test
@@ -37,6 +39,6 @@ class PasswordTest {
         // act & assert
         assertThatThrownBy(() -> {
             Password password = Password.of(input);
-        }).isInstanceOf(RuntimeException.class);
+        }).isInstanceOf(PasswordMalformedException.class);
     }
 }

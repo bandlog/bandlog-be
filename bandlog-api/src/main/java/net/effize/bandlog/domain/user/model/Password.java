@@ -1,11 +1,17 @@
 package net.effize.bandlog.domain.user.model;
 
+import net.effize.bandlog.domain.user.exception.PasswordMalformedException;
+import net.effize.bandlog.domain.user.exception.PasswordTooShortException;
+
 public class Password {
     private String value;
 
     private Password(String value) {
-        if (!isValid(value)) {
-            throw new RuntimeException("Invalid password");
+        if (!isLengthValid(value)) {
+            throw new PasswordTooShortException();
+        }
+        if (!isMatchingPattern(value)) {
+            throw new PasswordMalformedException();
         }
         this.value = value;
     }
@@ -14,10 +20,13 @@ public class Password {
         return new Password(value);
     }
 
-    private boolean isValid(String password) {
-        return password.length() >= 8 &&
-                password.matches(
-                        "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^a-zA-Z0-9]).{8,}$"
-                );
+    private boolean isLengthValid(String password) {
+        return password.length() >= 8;
+    }
+
+    private boolean isMatchingPattern(String password) {
+        return password.matches(
+                "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^a-zA-Z0-9]).{8,}$"
+        );
     }
 }
