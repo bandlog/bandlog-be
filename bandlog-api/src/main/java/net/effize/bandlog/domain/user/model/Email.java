@@ -1,9 +1,13 @@
 package net.effize.bandlog.domain.user.model;
 
+import net.effize.bandlog.domain.user.exception.EmailMalformedException;
+
 public class Email {
+    private final String value;
+
     private Email(String value) {
         if (!isValid(value)) {
-            throw new RuntimeException("Invalid email address");
+            throw new EmailMalformedException();
         }
         this.value = value;
     }
@@ -11,8 +15,6 @@ public class Email {
     public static Email of(String value) {
         return new Email(value);
     }
-
-    private final String value;
 
     public String fullEmail() {
         return value;

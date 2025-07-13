@@ -1,5 +1,6 @@
 package net.effize.bandlog.domain.user.model;
 
+import net.effize.bandlog.domain.user.exception.EmailMalformedException;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,6 +27,6 @@ public class EmailTest {
         // act & assert
         assertThatThrownBy(() -> {
             Email email = Email.of(input);
-        }).isInstanceOf(RuntimeException.class);
+        }).isInstanceOf(EmailMalformedException.class);
     }
 }
