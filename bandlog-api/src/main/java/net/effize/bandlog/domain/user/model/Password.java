@@ -35,4 +35,8 @@ public class Password {
     public String hashedPassword() {
         return value;
     }
+
+    public boolean matches(String inputPassword, PasswordEncoder encoder) {
+        return encoder.matches(inputPassword, this.value);
+    }
 }

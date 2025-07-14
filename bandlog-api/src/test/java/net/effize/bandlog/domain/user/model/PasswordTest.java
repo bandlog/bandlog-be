@@ -45,6 +45,33 @@ class PasswordTest {
         }).isInstanceOf(PasswordMalformedException.class);
     }
 
+    @Test
+    public void 비밀번호는_올바른_입력과_일치해야_한다() {
+        // arrange
+        String rawPassword = "Test123!";
+        Password password = Password.of(rawPassword, encoder);
+
+        // act
+        boolean result = password.matches(rawPassword, encoder);
+
+        // assert
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    public void 비밀번호는_잘못된_입력과_일치하지_않아야_한다() {
+        // arrange
+        String rawPassword = "Test123!";
+        String wrongPassword = "Wrong123!";
+        Password password = Password.of(rawPassword, encoder);
+
+        // act
+        boolean result = password.matches(wrongPassword, encoder);
+
+        // assert
+        assertThat(result).isFalse();
+    }
+
     static class TestPasswordEncoder implements PasswordEncoder {
         @Override
         public String encode(String rawPassword) {
@@ -52,8 +79,8 @@ class PasswordTest {
         }
 
         @Override
-        public boolean matches(String inputPassword, Password password) {
-            return false;
+        public boolean matches(String inputPassword, String hashedPassword) {
+            return inputPassword.equals(hashedPassword);
         }
     }
 }
