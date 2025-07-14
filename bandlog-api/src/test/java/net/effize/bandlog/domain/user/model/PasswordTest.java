@@ -45,7 +45,7 @@ class PasswordTest {
         }).isInstanceOf(PasswordMalformedException.class);
     }
 
-    class TestPasswordEncoder implements PasswordEncoder {
+    static class TestPasswordEncoder implements PasswordEncoder {
         @Override
         public String encode(String rawPassword) {
             return rawPassword;
