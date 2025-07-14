@@ -7,7 +7,7 @@ public class User {
 
     private Email email;
 
-    private RawPassword password;
+    private Password password;
 
     private Instant createdAt;
     private Instant updatedAt;
