@@ -12,5 +12,7 @@ public class User {
     private Nickname nickname;
 
     private Instant createdAt;
+
+
     private Instant updatedAt;
 }
