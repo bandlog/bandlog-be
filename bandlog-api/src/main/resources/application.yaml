@@ -1,1 +1,7 @@
-spring.application.name=bandlog-be
+spring:
+  application.name: bandlog-be
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: https://projectid.supabase.co/auth/v1/.well-known/jwks.json
