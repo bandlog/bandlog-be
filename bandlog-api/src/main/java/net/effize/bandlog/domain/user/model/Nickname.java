@@ -1,5 +1,6 @@
 package net.effize.bandlog.domain.user.model;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Random;
 
@@ -19,12 +20,12 @@ public class Nickname {
         return new Nickname(value);
     }
 
-    public static Nickname randomNickname(Random random) {
+    public static Nickname randomNickname(Random random, Instant now) {
         String firstPart = FIRST_NICKNAME_PARTS.get(random.nextInt(FIRST_NICKNAME_PARTS.size()));
         String secondPart = SECOND_NICKNAME_PARTS.get(random.nextInt(SECOND_NICKNAME_PARTS.size()));
         String thirdPart = THIRD_NICKNAME_PARTS.get(random.nextInt(THIRD_NICKNAME_PARTS.size()));
 
-        return new Nickname(firstPart + secondPart + thirdPart);
+        return new Nickname(firstPart + secondPart + thirdPart + now.toEpochMilli());
     }
 
     public String stringValue() {
