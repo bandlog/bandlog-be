@@ -1,7 +1,6 @@
-supabase:
-  project-url: https://projectid.supabase.co
-
 spring:
+  config:
+    import: application-secret.yaml
   application.name: bandlog-be
   security:
     oauth2:
