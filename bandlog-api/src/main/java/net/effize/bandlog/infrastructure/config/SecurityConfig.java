@@ -1,6 +1,6 @@
 package net.effize.bandlog.infrastructure.config;
 
-import net.effize.bandlog.infrastructure.auth.CustomJwtAuthenticationConverter;
+import net.effize.bandlog.infrastructure.auth.JwtToUserAuthenticationConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,23 +11,26 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    private final CustomJwtAuthenticationConverter customJwtAuthenticationConverter;
 
-    public SecurityConfig(CustomJwtAuthenticationConverter customJwtAuthenticationConverter) {
-        this.customJwtAuthenticationConverter = customJwtAuthenticationConverter;
+    private final JwtToUserAuthenticationConverter jwtToUserAuthenticationConverter;
+
+    public SecurityConfig(JwtToUserAuthenticationConverter jwtToUserAuthenticationConverter) {
+        this.jwtToUserAuthenticationConverter = jwtToUserAuthenticationConverter;
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authorize -> authorize
+                .authorizeHttpRequests(authz -> authz
+                        .requestMatchers("/public/**", "/health/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> jwt
-                                .jwtAuthenticationConverter(customJwtAuthenticationConverter))
+                                .jwtAuthenticationConverter(jwtToUserAuthenticationConverter)
+                        )
                 );
 
         return http.build();

@@ -18,19 +18,21 @@ import java.util.List;
 import java.util.Random;
 
 @Component
-public class CustomJwtAuthenticationConverter implements Converter<Jwt, AbstractAuthenticationToken> {
+public class JwtToUserAuthenticationConverter implements Converter<Jwt, AbstractAuthenticationToken> {
+
     private final UserRepository userRepository;
 
-    public CustomJwtAuthenticationConverter(UserRepository userRepository) {
+    public JwtToUserAuthenticationConverter(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+
 
     @Override
     public AbstractAuthenticationToken convert(Jwt jwt) {
         String supabaseIdString = jwt.getSubject();
         SupabaseUserId supabaseUserId = SupabaseUserId.of(supabaseIdString);
 
-        User user = userRepository.findBySupabaseId(supabaseUserId)
+        User user = userRepository.findBySupabaseUserId(supabaseUserId)
                 .orElseGet(() -> {
                     String emailString = jwt.getClaimAsString("email");
                     Email email = Email.of(emailString);
@@ -43,5 +45,4 @@ public class CustomJwtAuthenticationConverter implements Converter<Jwt, Abstract
 
         return UsernamePasswordAuthenticationToken.authenticated(user, null, authorities);
     }
-
 }

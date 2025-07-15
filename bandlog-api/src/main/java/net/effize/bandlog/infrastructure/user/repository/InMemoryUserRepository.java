@@ -16,12 +16,12 @@ public class InMemoryUserRepository implements UserRepository {
     }
 
     @Override
-    public Optional<User> findBySupabaseId(SupabaseUserId id) {
+    public Optional<User> findBySupabaseUserId(SupabaseUserId id) {
         return Optional.empty();
     }
 
     @Override
     public User save(User user) {
-        return null;
+        return user;
     }
 }

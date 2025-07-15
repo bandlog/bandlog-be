@@ -1,7 +1,20 @@
+supabase:
+  project-url: https://projectid.supabase.co
+
 spring:
   application.name: bandlog-be
   security:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: https://projectid.supabase.co/auth/v1/.well-known/jwks.json
+          jwk-set-uri: ${supabase.project-url}/auth/v1/.well-known/jwks.json
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+        web: DEBUG
+    net:
+      effize:
+        bandlog: DEBUG
