@@ -1,4 +1,4 @@
-package net.effize.bandlog.infrastructure.auth.exception;
+package net.effize.bandlog.api.common.authuser.exception;
 
 import net.effize.bandlog.domain.common.exception.BandlogException;
 import net.effize.bandlog.domain.common.exception.ErrorCode;
