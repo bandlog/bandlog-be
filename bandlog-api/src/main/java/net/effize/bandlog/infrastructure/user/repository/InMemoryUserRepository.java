@@ -1,12 +1,15 @@
 package net.effize.bandlog.infrastructure.user.repository;
 
+import net.effize.bandlog.domain.user.model.Email;
 import net.effize.bandlog.domain.user.model.SupabaseUserId;
 import net.effize.bandlog.domain.user.model.User;
 import net.effize.bandlog.domain.user.model.UserId;
 import net.effize.bandlog.domain.user.repository.UserRepository;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
 import java.util.Optional;
+import java.util.Random;
 
 @Component
 public class InMemoryUserRepository implements UserRepository {
@@ -17,7 +20,9 @@ public class InMemoryUserRepository implements UserRepository {
 
     @Override
     public Optional<User> findBySupabaseUserId(SupabaseUserId id) {
-        return Optional.empty();
+        return Optional.of(
+                User.create(SupabaseUserId.of("aser"), Email.of("asdb@example.com"), Instant.now(), new Random())
+        );
     }
 
     @Override
