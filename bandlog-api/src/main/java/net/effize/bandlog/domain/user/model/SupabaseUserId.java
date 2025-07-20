@@ -13,7 +13,8 @@ public class SupabaseUserId {
         return new SupabaseUserId(value);
     }
 
-    public String stringValue() {
+    @Override
+    public String toString() {
         return value;
     }
 
