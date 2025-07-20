@@ -40,6 +40,6 @@ public class AuthController {
 
     @GetMapping("/me")
     public String currentUser(@AuthUser User user) {
-        return "hello " + user.nickname().stringValue();
+        return "hello " + user.nickname().toString();
     }
 }
