@@ -2,6 +2,7 @@ package net.effize.bandlog.domain.user.model;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 public class Nickname {
@@ -30,5 +31,17 @@ public class Nickname {
 
     public String stringValue() {
         return value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Nickname nickname = (Nickname) o;
+        return Objects.equals(value, nickname.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(value);
     }
 }
