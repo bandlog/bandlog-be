@@ -1,6 +1,6 @@
 package net.effize.bandlog.infrastructure.config;
 
-import net.effize.bandlog.infrastructure.auth.JwtToUserAuthenticationConverter;
+import net.effize.bandlog.infrastructure.auth.JwtToAuthenticationPrincipalConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,10 +12,10 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final JwtToUserAuthenticationConverter jwtToUserAuthenticationConverter;
+    private final JwtToAuthenticationPrincipalConverter jwtToAuthenticationPrincipalConverter;
 
-    public SecurityConfig(JwtToUserAuthenticationConverter jwtToUserAuthenticationConverter) {
-        this.jwtToUserAuthenticationConverter = jwtToUserAuthenticationConverter;
+    public SecurityConfig(JwtToAuthenticationPrincipalConverter jwtToAuthenticationPrincipalConverter) {
+        this.jwtToAuthenticationPrincipalConverter = jwtToAuthenticationPrincipalConverter;
     }
 
     @Bean
@@ -29,7 +29,7 @@ public class SecurityConfig {
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> jwt
-                                .jwtAuthenticationConverter(jwtToUserAuthenticationConverter)
+                                .jwtAuthenticationConverter(jwtToAuthenticationPrincipalConverter)
                         )
                 );
 
