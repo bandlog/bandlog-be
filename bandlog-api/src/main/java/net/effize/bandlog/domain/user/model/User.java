@@ -28,4 +28,28 @@ public class User {
     public static User create(SupabaseUserId supabaseId, Email email, Instant now, Random random) {
         return new User(null, supabaseId, email, Nickname.randomNickname(random, now), now, now);
     }
+
+    public UserId id() {
+        return id;
+    }
+
+    public SupabaseUserId supabaseUserId() {
+        return supabaseId;
+    }
+
+    public Email email() {
+        return email;
+    }
+
+    public Nickname nickname() {
+        return nickname;
+    }
+
+    public Instant createdAt() {
+        return createdAt;
+    }
+
+    public Instant updatedAt() {
+        return updatedAt;
+    }
 }
