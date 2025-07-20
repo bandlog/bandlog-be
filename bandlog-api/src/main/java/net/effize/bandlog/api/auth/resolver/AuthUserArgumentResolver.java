@@ -1,7 +1,7 @@
-package net.effize.bandlog.api.common.authuser;
+package net.effize.bandlog.api.auth.resolver;
 
-import net.effize.bandlog.api.common.authuser.exception.IllegalAuthenticationException;
-import net.effize.bandlog.api.common.authuser.exception.UserNotSignedUpException;
+import net.effize.bandlog.api.auth.exception.IllegalAuthenticationException;
+import net.effize.bandlog.api.auth.exception.UserNotSignedUpException;
 import net.effize.bandlog.domain.auth.model.AuthenticationPrincipal;
 import net.effize.bandlog.domain.user.model.User;
 import net.effize.bandlog.domain.user.repository.UserRepository;

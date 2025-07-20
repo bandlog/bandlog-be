@@ -1,6 +1,6 @@
 package net.effize.bandlog.api.config;
 
-import net.effize.bandlog.api.common.authuser.AuthUserArgumentResolver;
+import net.effize.bandlog.api.auth.resolver.AuthUserArgumentResolver;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;

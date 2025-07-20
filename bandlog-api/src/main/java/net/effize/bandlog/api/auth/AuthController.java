@@ -1,6 +1,6 @@
 package net.effize.bandlog.api.auth;
 
-import net.effize.bandlog.api.common.authuser.AuthUser;
+import net.effize.bandlog.api.auth.resolver.AuthUser;
 import net.effize.bandlog.domain.auth.model.AuthenticationPrincipal;
 import net.effize.bandlog.domain.user.model.User;
 import net.effize.bandlog.domain.user.repository.UserRepository;
