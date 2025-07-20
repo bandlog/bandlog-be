@@ -1,1 +1,19 @@
-spring.application.name=bandlog-be
+spring:
+  config:
+    import: application-secret.yaml
+  application.name: bandlog-be
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${supabase.project-url}/auth/v1/.well-known/jwks.json
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+        web: DEBUG
+    net:
+      effize:
+        bandlog: DEBUG
