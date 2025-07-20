@@ -29,7 +29,8 @@ public class Nickname {
         return new Nickname(firstPart + secondPart + thirdPart + now.toEpochMilli());
     }
 
-    public String stringValue() {
+    @Override
+    public String toString() {
         return value;
     }
 
