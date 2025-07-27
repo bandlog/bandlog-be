@@ -32,7 +32,7 @@ public class NicknameTest {
         Nickname nickname = Nickname.randomNickname(random, now);
 
         // assert
-        assertThat(nickname.stringValue()).isNotEmpty();
+        assertThat(nickname.toString()).isNotEmpty();
     }
 
     @Test
@@ -43,7 +43,7 @@ public class NicknameTest {
 
         // act
         Nickname nickname = Nickname.randomNickname(random, now);
-        String nicknameValue = nickname.stringValue();
+        String nicknameValue = nickname.toString();
 
         // assert
         assertThat(nicknameValue).matches("(소름돋는|기가막힌|천년에한번나올|경악스러운|온몸에전율이돋는|짜릿한|감동이흐르는|참을수없는)(재즈|펑크|메탈|락|팝|인디)(기타리스트|보컬리스트|드러머|베이시스트|키보디스트)\\d+");
@@ -61,7 +61,7 @@ public class NicknameTest {
         Nickname nickname2 = Nickname.randomNickname(random2, now);
 
         // assert
-        assertThat(nickname1.stringValue()).isEqualTo(nickname2.stringValue());
+        assertThat(nickname1.toString()).isEqualTo(nickname2.toString());
     }
 
     @Test
@@ -77,7 +77,7 @@ public class NicknameTest {
         Nickname nickname2 = Nickname.randomNickname(random2, time2);
 
         // assert
-        assertThat(nickname1.stringValue()).isNotEqualTo(nickname2.stringValue());
+        assertThat(nickname1.toString()).isNotEqualTo(nickname2.toString());
     }
 
     @Test
@@ -87,10 +87,10 @@ public class NicknameTest {
 
         // act
         boolean foundDifferent = false;
-        String firstNickname = Nickname.randomNickname(random, Instant.now()).stringValue();
+        String firstNickname = Nickname.randomNickname(random, Instant.now()).toString();
 
         for (int i = 0; i < 10; i++) {
-            String currentNickname = Nickname.randomNickname(random, Instant.now()).stringValue();
+            String currentNickname = Nickname.randomNickname(random, Instant.now()).toString();
             if (!firstNickname.equals(currentNickname)) {
                 foundDifferent = true;
                 break;
