@@ -8,6 +8,7 @@ import net.effize.bandlog.domain.user.model.User;
 import net.effize.bandlog.infrastructure.user.UserRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.Random;
@@ -20,6 +21,7 @@ public class AuthApplicationService {
         this.userRepository = userRepository;
     }
 
+    @Transactional
     public void signup(Authentication authentication) {
         if (!(authentication.getPrincipal() instanceof AuthenticationPrincipal authenticationPrincipal)) {
             throw new IllegalAuthenticationException();
@@ -39,6 +41,7 @@ public class AuthApplicationService {
         userRepository.save(newUser);
     }
 
+    @Transactional(readOnly = true)
     public AuthUser authenticate(Authentication authentication) {
         if (authentication == null || !authentication.isAuthenticated()) {
             throw new IllegalAuthenticationException();
