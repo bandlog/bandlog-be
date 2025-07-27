@@ -1,4 +1,4 @@
-package net.effize.bandlog.infrastructure.auth;
+package net.effize.bandlog.api.config.converter;
 
 import net.effize.bandlog.application.auth.dto.AuthenticationPrincipal;
 import net.effize.bandlog.domain.user.model.Email;
