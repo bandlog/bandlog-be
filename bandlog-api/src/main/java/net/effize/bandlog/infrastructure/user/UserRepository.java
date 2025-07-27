@@ -9,4 +9,6 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, UserId> {
     Optional<User> findBySupabaseUserId(SupabaseUserId id);
+
+    Boolean existsBySupabaseUserId(SupabaseUserId id);
 }

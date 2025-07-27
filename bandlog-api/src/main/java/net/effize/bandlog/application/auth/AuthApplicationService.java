@@ -25,6 +25,10 @@ public class AuthApplicationService {
             throw new IllegalAuthenticationException();
         }
 
+        if (userRepository.existsBySupabaseUserId(authenticationPrincipal.supabaseUserId())) {
+            return;
+        }
+
         User newUser = User.create(
                 authenticationPrincipal.supabaseUserId(),
                 authenticationPrincipal.email(),
