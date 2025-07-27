@@ -10,11 +10,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.SecureRandom;
 import java.time.Instant;
 import java.util.Random;
 
 @Service
 public class AuthApplicationService {
+    private static final Random RANDOM = new SecureRandom();
     private final UserRepository userRepository;
 
     public AuthApplicationService(UserRepository userRepository) {
@@ -35,7 +37,7 @@ public class AuthApplicationService {
                 authenticationPrincipal.supabaseUserId(),
                 authenticationPrincipal.email(),
                 Instant.now(),
-                new Random()
+                RANDOM
         );
 
         userRepository.save(newUser);
