@@ -6,7 +6,7 @@ import java.util.Random;
 public class User {
     private UserId id;
 
-    private SupabaseUserId supabaseId;
+    private SupabaseUserId supabaseUserId;
 
     private Email email;
 
@@ -18,7 +18,7 @@ public class User {
 
     private User(UserId id, SupabaseUserId supabaseId, Email email, Nickname nickname, Instant createdAt, Instant updatedAt) {
         this.id = id;
-        this.supabaseId = supabaseId;
+        this.supabaseUserId = supabaseId;
         this.email = email;
         this.nickname = nickname;
         this.createdAt = createdAt;
@@ -34,7 +34,7 @@ public class User {
     }
 
     public SupabaseUserId supabaseUserId() {
-        return supabaseId;
+        return supabaseUserId;
     }
 
     public Email email() {

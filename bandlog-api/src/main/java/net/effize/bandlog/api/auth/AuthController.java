@@ -1,6 +1,7 @@
 package net.effize.bandlog.api.auth;
 
-import net.effize.bandlog.api.auth.resolver.AuthUser;
+import net.effize.bandlog.api.auth.resolver.AuthUserParam;
+import net.effize.bandlog.application.auth.dto.AuthUser;
 import net.effize.bandlog.domain.auth.model.AuthenticationPrincipal;
 import net.effize.bandlog.domain.user.model.User;
 import net.effize.bandlog.domain.user.repository.UserRepository;
@@ -39,7 +40,7 @@ public class AuthController {
     }
 
     @GetMapping("/me")
-    public String currentUser(@AuthUser User user) {
-        return "hello " + user.nickname().toString();
+    public String currentUser(@AuthUserParam AuthUser authUser) {
+        return "hello " + authUser.nickname();
     }
 }

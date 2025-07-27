@@ -1,10 +1,7 @@
 package net.effize.bandlog.api.auth.resolver;
 
-import net.effize.bandlog.api.auth.exception.IllegalAuthenticationException;
-import net.effize.bandlog.api.auth.exception.UserNotSignedUpException;
-import net.effize.bandlog.domain.auth.model.AuthenticationPrincipal;
-import net.effize.bandlog.domain.user.model.User;
-import net.effize.bandlog.domain.user.repository.UserRepository;
+import net.effize.bandlog.application.auth.AuthApplicationService;
+import net.effize.bandlog.application.auth.dto.AuthUser;
 import org.springframework.core.MethodParameter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,16 +14,16 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 @Component
 public class AuthUserArgumentResolver implements HandlerMethodArgumentResolver {
 
-    private final UserRepository userRepository;
+    private final AuthApplicationService authApplicationService;
 
-    public AuthUserArgumentResolver(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public AuthUserArgumentResolver(AuthApplicationService authApplicationService) {
+        this.authApplicationService = authApplicationService;
     }
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.hasParameterAnnotation(AuthUser.class)
-                && parameter.getParameterType().equals(User.class);
+        return parameter.hasParameterAnnotation(AuthUserParam.class)
+                && parameter.getParameterType().equals(AuthUser.class);
 
     }
 
@@ -39,15 +36,6 @@ public class AuthUserArgumentResolver implements HandlerMethodArgumentResolver {
     ) throws Exception {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (authentication == null || !authentication.isAuthenticated()) {
-            throw new IllegalAuthenticationException();
-        }
-
-        if (!(authentication.getPrincipal() instanceof AuthenticationPrincipal authPrincipal)) {
-            throw new IllegalAuthenticationException();
-        }
-
-        return userRepository.findBySupabaseUserId(authPrincipal.getSupabaseUserId())
-                .orElseThrow(() -> new UserNotSignedUpException());
+        return authApplicationService.authenticate(authentication);
     }
 }
