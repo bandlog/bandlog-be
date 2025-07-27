@@ -1,4 +1,4 @@
-package net.effize.bandlog.domain.user.repository;
+package net.effize.bandlog.infrastructure.user;
 
 import net.effize.bandlog.domain.user.model.SupabaseUserId;
 import net.effize.bandlog.domain.user.model.User;

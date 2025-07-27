@@ -1,10 +1,9 @@
-package net.effize.bandlog.infrastructure.user.repository;
+package net.effize.bandlog.infrastructure.user;
 
 import net.effize.bandlog.domain.user.model.Email;
 import net.effize.bandlog.domain.user.model.SupabaseUserId;
 import net.effize.bandlog.domain.user.model.User;
 import net.effize.bandlog.domain.user.model.UserId;
-import net.effize.bandlog.domain.user.repository.UserRepository;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
