@@ -10,8 +10,7 @@ import java.util.Random;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @AttributeOverride(name = "value", column = @Column(name = "id"))
-    private UserId id;
+    private Long id;
 
     @Embedded
     @AttributeOverride(name = "value", column = @Column(name = "supabase_user_id"))
@@ -34,7 +33,7 @@ public class User {
     protected User() {
     }
 
-    private User(UserId id, SupabaseUserId supabaseId, Email email, Nickname nickname, Instant createdAt, Instant updatedAt) {
+    private User(Long id, SupabaseUserId supabaseId, Email email, Nickname nickname, Instant createdAt, Instant updatedAt) {
         this.id = id;
         this.supabaseUserId = supabaseId;
         this.email = email;
@@ -48,7 +47,7 @@ public class User {
     }
 
     public UserId id() {
-        return id;
+        return UserId.of(id);
     }
 
     public SupabaseUserId supabaseUserId() {
