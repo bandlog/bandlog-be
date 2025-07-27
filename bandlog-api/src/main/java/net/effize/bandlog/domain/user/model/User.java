@@ -1,12 +1,16 @@
 package net.effize.bandlog.domain.user.model;
 
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
 import java.util.Random;
 
 @Entity
 @Table(name = "users")
+@EntityListeners(AuditingEntityListener.class)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,9 +28,11 @@ public class User {
     @AttributeOverride(name = "value", column = @Column(name = "nickname"))
     private Nickname nickname;
 
+    @CreatedDate
     @Column(name = "created_at")
     private Instant createdAt;
 
+    @LastModifiedDate
     @Column(name = "updated_at")
     private Instant updatedAt;
 
@@ -43,7 +49,7 @@ public class User {
     }
 
     public static User create(SupabaseUserId supabaseId, Email email, Instant now, Random random) {
-        return new User(null, supabaseId, email, Nickname.randomNickname(random, now), now, now);
+        return new User(null, supabaseId, email, Nickname.randomNickname(random, now), null, null);
     }
 
     public UserId id() {
