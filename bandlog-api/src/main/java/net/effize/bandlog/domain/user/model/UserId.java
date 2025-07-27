@@ -2,7 +2,7 @@ package net.effize.bandlog.domain.user.model;
 
 import java.util.Objects;
 
-public class UserId {
+public final class UserId {
     private final Long value;
 
     private UserId(Long value) {
