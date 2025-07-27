@@ -1,9 +1,15 @@
 package net.effize.bandlog.domain.user.model;
 
+import jakarta.persistence.Embeddable;
+
 import java.util.Objects;
 
+@Embeddable
 public class UserId {
-    private final Long value;
+    private Long value;
+
+    protected UserId() {
+    }
 
     private UserId(Long value) {
         this.value = value;

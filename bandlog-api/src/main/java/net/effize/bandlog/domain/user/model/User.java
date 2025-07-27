@@ -1,20 +1,38 @@
 package net.effize.bandlog.domain.user.model;
 
+import jakarta.persistence.*;
+
 import java.time.Instant;
 import java.util.Random;
 
+@Entity
+@Table(name = "users")
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @AttributeOverride(name = "value", column = @Column(name = "id"))
     private UserId id;
 
+    @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "supabase_user_id"))
     private SupabaseUserId supabaseUserId;
 
+    @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "email"))
     private Email email;
 
+    @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "nickname"))
     private Nickname nickname;
 
+    @Column(name = "created_at")
     private Instant createdAt;
 
+    @Column(name = "updated_at")
     private Instant updatedAt;
+
+    protected User() {
+    }
 
     private User(UserId id, SupabaseUserId supabaseId, Email email, Nickname nickname, Instant createdAt, Instant updatedAt) {
         this.id = id;

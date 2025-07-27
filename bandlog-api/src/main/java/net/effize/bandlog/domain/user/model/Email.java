@@ -1,11 +1,16 @@
 package net.effize.bandlog.domain.user.model;
 
+import jakarta.persistence.Embeddable;
 import net.effize.bandlog.domain.user.exception.EmailMalformedException;
 
 import java.util.Objects;
 
+@Embeddable
 public class Email {
-    private final String value;
+    private String value;
+
+    protected Email() {
+    }
 
     private Email(String value) {
         if (!isValid(value)) {

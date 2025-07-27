@@ -1,9 +1,15 @@
 package net.effize.bandlog.domain.user.model;
 
+import jakarta.persistence.Embeddable;
+
 import java.util.Objects;
 
+@Embeddable
 public class SupabaseUserId {
-    private final String value;
+    private String value;
+
+    protected SupabaseUserId() {
+    }
 
     private SupabaseUserId(String value) {
         this.value = value;
