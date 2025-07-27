@@ -1,1 +1,30 @@
-spring.application.name=bandlog-be
+spring:
+  config:
+    import: application-secret.yaml
+  application.name: bandlog-be
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${supabase.project-url}/auth/v1/.well-known/jwks.json
+  datasource:
+    type: org.springframework.jdbc.datasource.SimpleDriverDataSource
+    url: ${supabase.jdbc-url}?prepareThreshold=0&preferQueryMode=simple
+    username: ${supabase.username}
+    password: ${supabase.password}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+        web: DEBUG
+    net:
+      effize:
+        bandlog: DEBUG
