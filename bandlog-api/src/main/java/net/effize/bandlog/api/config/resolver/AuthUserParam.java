@@ -1,4 +1,4 @@
-package net.effize.bandlog.api.auth.resolver;
+package net.effize.bandlog.api.config.resolver;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

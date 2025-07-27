@@ -1,6 +1,6 @@
 package net.effize.bandlog.api.auth;
 
-import net.effize.bandlog.api.auth.resolver.AuthUserParam;
+import net.effize.bandlog.api.config.resolver.AuthUserParam;
 import net.effize.bandlog.application.auth.AuthApplicationService;
 import net.effize.bandlog.application.auth.dto.AuthUser;
 import org.springframework.http.HttpStatus;
