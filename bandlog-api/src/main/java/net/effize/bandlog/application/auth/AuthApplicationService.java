@@ -26,7 +26,7 @@ public class AuthApplicationService {
             throw new IllegalAuthenticationException();
         }
 
-        User user = userRepository.findBySupabaseUserId(authPrincipal.getSupabaseUserId())
+        User user = userRepository.findBySupabaseUserId(authPrincipal.supabaseUserId())
                 .orElseThrow(() -> new UserNotSignedUpException());
 
         return new AuthUser(user);

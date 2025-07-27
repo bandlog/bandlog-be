@@ -30,8 +30,8 @@ public class AuthController {
         }
 
         User newUser = User.create(
-                authenticationPrincipal.getSupabaseUserId(),
-                authenticationPrincipal.getEmail(),
+                authenticationPrincipal.supabaseUserId(),
+                authenticationPrincipal.email(),
                 Instant.now(),
                 new Random()
         );
