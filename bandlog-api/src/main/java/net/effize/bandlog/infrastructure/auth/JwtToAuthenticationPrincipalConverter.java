@@ -1,6 +1,6 @@
 package net.effize.bandlog.infrastructure.auth;
 
-import net.effize.bandlog.domain.auth.model.AuthenticationPrincipal;
+import net.effize.bandlog.application.auth.dto.AuthenticationPrincipal;
 import net.effize.bandlog.domain.user.model.Email;
 import net.effize.bandlog.domain.user.model.SupabaseUserId;
 import org.springframework.core.convert.converter.Converter;

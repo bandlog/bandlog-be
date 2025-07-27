@@ -2,7 +2,7 @@ package net.effize.bandlog.api.auth;
 
 import net.effize.bandlog.api.auth.resolver.AuthUserParam;
 import net.effize.bandlog.application.auth.dto.AuthUser;
-import net.effize.bandlog.domain.auth.model.AuthenticationPrincipal;
+import net.effize.bandlog.application.auth.dto.AuthenticationPrincipal;
 import net.effize.bandlog.domain.user.model.User;
 import net.effize.bandlog.domain.user.repository.UserRepository;
 import org.springframework.http.HttpStatus;

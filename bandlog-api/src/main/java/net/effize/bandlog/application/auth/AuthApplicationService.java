@@ -3,7 +3,7 @@ package net.effize.bandlog.application.auth;
 import net.effize.bandlog.api.auth.exception.IllegalAuthenticationException;
 import net.effize.bandlog.api.auth.exception.UserNotSignedUpException;
 import net.effize.bandlog.application.auth.dto.AuthUser;
-import net.effize.bandlog.domain.auth.model.AuthenticationPrincipal;
+import net.effize.bandlog.application.auth.dto.AuthenticationPrincipal;
 import net.effize.bandlog.domain.user.model.User;
 import net.effize.bandlog.domain.user.repository.UserRepository;
 import org.springframework.security.core.Authentication;
