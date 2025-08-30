@@ -22,8 +22,8 @@ public class JwtToAuthenticationPrincipalConverter implements Converter<Jwt, Abs
         String supabaseIdString = jwt.getSubject();
         String emailString = jwt.getClaimAsString("email");
 
-        SupabaseUserId supabaseUserId = SupabaseUserId.of(supabaseIdString);
-        Email email = Email.of(emailString);
+        SupabaseUserId supabaseUserId = new SupabaseUserId(supabaseIdString);
+        Email email = new Email(emailString);
 
         AuthenticationPrincipal principal = new AuthenticationPrincipal(supabaseUserId, email);
         Collection<? extends GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_REGISTRATION"));
