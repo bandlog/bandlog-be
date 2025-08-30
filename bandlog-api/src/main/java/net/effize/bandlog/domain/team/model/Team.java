@@ -29,11 +29,19 @@ public class Team {
     }
 
     public static Team create(String name, String description, Instant now) {
+        return new Team(null, name, description, generateInviteCode(), now, now);
+    }
+
+    private static String generateInviteCode() {
         UUID inviteCode = UUID.randomUUID();
-        return new Team(null, name, description, inviteCode.toString(), now, now);
+        return inviteCode.toString();
     }
 
     public TeamId id() {
         return TeamId.of(id);
+    }
+
+    public void refreshInviteCode() {
+        this.inviteCode = generateInviteCode();
     }
 }
