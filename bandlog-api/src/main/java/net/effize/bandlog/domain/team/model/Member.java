@@ -36,4 +36,12 @@ public class Member {
     public MemberId id() {
         return MemberId.of(id);
     }
+
+    public MemberRole role() {
+        return role;
+    }
+
+    public UserId userId() {
+        return userId;
+    }
 }
