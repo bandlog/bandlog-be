@@ -1,6 +1,7 @@
 package net.effize.bandlog.domain.team.model;
 
 import java.time.Instant;
+import java.util.UUID;
 
 public class Team {
     private Long id;
@@ -28,7 +29,8 @@ public class Team {
     }
 
     public static Team create(String name, String description, Instant now) {
-        return new Team(null, name, description, null, now, now);
+        UUID inviteCode = UUID.randomUUID();
+        return new Team(null, name, description, inviteCode.toString(), now, now);
     }
 
     public TeamId id() {
