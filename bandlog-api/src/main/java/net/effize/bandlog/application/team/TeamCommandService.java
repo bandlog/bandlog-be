@@ -28,6 +28,14 @@ public class TeamCommandService {
 
     public RefreshTeamInviteCodeResponse refreshTeamInviteCode(UserId authUserId, RefreshTeamInviteCodeRequest request) {
         Team foundTeam = teamService.activeTeam(TeamId.of(request.teamId()));
+        List<Member> members = teamService.membersOf(foundTeam);
+        long meLeaderCount = members.stream()
+                .filter((member) -> member.userId() == authUserId)
+                .filter((member) -> member.role() == MemberRole.LEADER)
+                .count();
+
+        if (!(meLeaderCount > 0)) throw new IllegalStateException("User is not a leader of the team");
+
         foundTeam.refreshInviteCode();
         return new RefreshTeamInviteCodeResponse(foundTeam.id().longValue());
     }
