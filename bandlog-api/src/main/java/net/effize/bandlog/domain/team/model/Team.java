@@ -44,4 +44,20 @@ public class Team {
     public void refreshInviteCode() {
         this.inviteCode = generateInviteCode();
     }
+
+    public String name() {
+        return name;
+    }
+
+    public String description() {
+        return description;
+    }
+
+    public String inviteCode() {
+        return inviteCode;
+    }
+
+    public Instant createdAt() {
+        return createdAt;
+    }
 }
