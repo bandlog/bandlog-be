@@ -41,11 +41,4 @@ public class TeamService {
     public List<Member> membersOf(Team team) {
         return memberRepository.findAllByTeam(team);
     }
-
-    public Team refreshInviteCode(TeamId teamId) {
-        Team foundTeam = teamRepository.findById(teamId.value())
-                .orElseThrow(() -> new IllegalArgumentException("Team not found"));
-        foundTeam.refreshInviteCode();
-        return teamRepository.save(foundTeam);
-    }
 }
