@@ -7,10 +7,12 @@ import net.effize.bandlog.domain.team.model.Team;
 import net.effize.bandlog.domain.team.model.TeamId;
 import net.effize.bandlog.domain.team.service.TeamService;
 import net.effize.bandlog.domain.user.model.UserId;
+import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
 
+@Service
 public class TeamCommandService {
     private final TeamService teamService;
 

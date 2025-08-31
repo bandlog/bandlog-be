@@ -8,11 +8,13 @@ import net.effize.bandlog.domain.team.service.TeamService;
 import net.effize.bandlog.domain.user.model.User;
 import net.effize.bandlog.domain.user.model.UserId;
 import net.effize.bandlog.infrastructure.user.UserRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Service
 public class TeamQueryService {
     private final TeamService teamService;
     private final UserRepository userRepository;

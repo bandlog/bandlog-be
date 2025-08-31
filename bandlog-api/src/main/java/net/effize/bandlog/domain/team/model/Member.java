@@ -1,20 +1,35 @@
 package net.effize.bandlog.domain.team.model;
 
+import jakarta.persistence.*;
 import net.effize.bandlog.domain.user.model.UserId;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
 
+@Entity
+@Table(name = "members")
+@EntityListeners(AuditingEntityListener.class)
 public class Member {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_id", nullable = false)
     private Team team;
 
+    @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "user_id", nullable = false))
     private UserId userId;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
     private MemberRole role;
 
+    @Column(name = "created_at", nullable = false)
     private Instant createdAt;
 
+    @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
 
     protected Member() {

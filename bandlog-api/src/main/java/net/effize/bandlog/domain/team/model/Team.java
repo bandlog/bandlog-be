@@ -1,19 +1,32 @@
 package net.effize.bandlog.domain.team.model;
 
+import jakarta.persistence.*;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import java.time.Instant;
 import java.util.UUID;
 
+@Entity
+@Table(name = "teams")
+@EntityListeners(AuditingEntityListener.class)
 public class Team {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "name")
     private String name;
 
+    @Column(name = "description")
     private String description;
 
+    @Column(name = "invite_code")
     private String inviteCode;
 
+    @Column(name = "created_at")
     private Instant createdAt;
 
+    @Column(name = "updated_at")
     private Instant updatedAt;
 
     protected Team() {
