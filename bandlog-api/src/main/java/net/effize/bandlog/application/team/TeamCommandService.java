@@ -25,7 +25,7 @@ public class TeamCommandService {
         Team createdTeam = teamService.createTeam(request.name(), request.description(), now);
         teamService.addNewMember(createdTeam, authUserId, MemberRole.LEADER, now);
 
-        return new CreateTeamResponse(createdTeam.id().longValue());
+        return new CreateTeamResponse(createdTeam.id().value());
     }
 
     public RefreshTeamInviteCodeResponse refreshTeamInviteCode(UserId authUserId, RefreshTeamInviteCodeRequest request) {
@@ -39,7 +39,7 @@ public class TeamCommandService {
         if (!(meLeaderCount > 0)) throw new IllegalStateException("User is not a leader of the team");
 
         foundTeam.refreshInviteCode();
-        return new RefreshTeamInviteCodeResponse(foundTeam.id().longValue());
+        return new RefreshTeamInviteCodeResponse(foundTeam.id().value());
     }
 
     public JoinTeamResponse joinTeam(UserId authUserId, JoinTeamRequest request) {
@@ -53,6 +53,6 @@ public class TeamCommandService {
 
         teamService.addNewMember(foundTeam, authUserId, MemberRole.MEMBER, now);
 
-        return new JoinTeamResponse(foundTeam.id().longValue());
+        return new JoinTeamResponse(foundTeam.id().value());
     }
 }

@@ -34,7 +34,7 @@ public class TeamService {
     }
 
     public Team activeTeam(TeamId id) {
-        return teamRepository.findById(id.longValue())
+        return teamRepository.findById(id.value())
                 .orElseThrow();
     }
 
@@ -43,7 +43,7 @@ public class TeamService {
     }
 
     public Team refreshInviteCode(TeamId teamId) {
-        Team foundTeam = teamRepository.findById(teamId.longValue())
+        Team foundTeam = teamRepository.findById(teamId.value())
                 .orElseThrow(() -> new IllegalArgumentException("Team not found"));
         foundTeam.refreshInviteCode();
         return teamRepository.save(foundTeam);
