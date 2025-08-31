@@ -7,7 +7,7 @@ import net.effize.bandlog.domain.team.model.TeamId;
 import net.effize.bandlog.domain.team.service.TeamService;
 import net.effize.bandlog.domain.user.model.User;
 import net.effize.bandlog.domain.user.model.UserId;
-import net.effize.bandlog.infrastructure.user.UserRepository;
+import net.effize.bandlog.domain.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
