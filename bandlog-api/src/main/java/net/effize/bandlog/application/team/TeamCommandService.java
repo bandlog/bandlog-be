@@ -32,7 +32,7 @@ public class TeamCommandService {
         Team foundTeam = teamService.activeTeam(TeamId.of(request.teamId()));
         List<Member> members = teamService.membersOf(foundTeam);
         long meLeaderCount = members.stream()
-                .filter((member) -> member.userId() == authUserId)
+                .filter((member) -> member.userId().equals(authUserId))
                 .filter((member) -> member.role() == MemberRole.LEADER)
                 .count();
 
@@ -46,7 +46,7 @@ public class TeamCommandService {
         Instant now = Instant.now();
         Team foundTeam = teamService.activeTeam(TeamId.of(request.teamId()));
         List<Member> members = teamService.membersOf(foundTeam);
-        long meCount = members.stream().filter((member) -> member.userId() == authUserId)
+        long meCount = members.stream().filter((member) -> member.userId().equals(authUserId))
                 .count();
 
         if (meCount > 0) throw new IllegalStateException("User already joined the team");

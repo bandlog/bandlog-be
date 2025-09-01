@@ -28,7 +28,7 @@ public class TeamQueryService {
     public TeamInfoResponse teamInfo(UserId authUserId, Long teamId) {
         Team foundTeam = teamService.activeTeam(TeamId.of(teamId));
         List<Member> members = teamService.membersOf(foundTeam);
-        long meCount = members.stream().filter(member -> member.userId() == authUserId).count();
+        long meCount = members.stream().filter(member -> member.userId().equals(authUserId)).count();
         if (meCount <= 0) throw new IllegalStateException("User is not a member of the team");
 
         List<User> users = userRepository.findAllByIdIn(
