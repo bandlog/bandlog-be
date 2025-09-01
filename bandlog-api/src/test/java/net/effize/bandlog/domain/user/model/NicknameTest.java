@@ -43,7 +43,7 @@ public class NicknameTest {
 
         // act
         Nickname nickname = Nickname.randomNickname(random, now);
-        String nicknameValue = nickname.toString();
+        String nicknameValue = nickname.stringValue();
 
         // assert
         assertThat(nicknameValue).matches("(소름돋는|기가막힌|천년에한번나올|경악스러운|온몸에전율이돋는|짜릿한|감동이흐르는|참을수없는)(재즈|펑크|메탈|락|팝|인디)(기타리스트|보컬리스트|드러머|베이시스트|키보디스트)\\d+");

@@ -53,7 +53,7 @@ public class User {
     }
 
     public UserId id() {
-        return UserId.of(id);
+        return new UserId(id);
     }
 
     public SupabaseUserId supabaseUserId() {

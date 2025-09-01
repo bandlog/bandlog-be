@@ -13,7 +13,7 @@ public class EmailTest {
         String input = "test@example.com";
 
         // act
-        Email email = Email.of(input);
+        Email email = new Email(input);
 
         // assert
         assertThat(email).isNotNull();
@@ -26,7 +26,7 @@ public class EmailTest {
 
         // act & assert
         assertThatThrownBy(() -> {
-            Email email = Email.of(input);
+            Email email = new Email(input);
         }).isInstanceOf(EmailMalformedException.class);
     }
 }
