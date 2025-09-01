@@ -1,4 +1,4 @@
-package net.effize.bandlog.common.config;
+package net.effize.bandlog.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
