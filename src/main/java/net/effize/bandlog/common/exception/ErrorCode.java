@@ -1,4 +1,4 @@
-package net.effize.bandlog.common.api;
+package net.effize.bandlog.common.exception;
 
 import java.util.Objects;
 

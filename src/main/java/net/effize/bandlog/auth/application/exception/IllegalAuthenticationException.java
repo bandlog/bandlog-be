@@ -1,7 +1,7 @@
 package net.effize.bandlog.auth.application.exception;
 
-import net.effize.bandlog.common.api.BandlogException;
-import net.effize.bandlog.common.api.ErrorCode;
+import net.effize.bandlog.common.exception.BandlogException;
+import net.effize.bandlog.common.exception.ErrorCode;
 
 public class IllegalAuthenticationException extends BandlogException {
     public IllegalAuthenticationException() {

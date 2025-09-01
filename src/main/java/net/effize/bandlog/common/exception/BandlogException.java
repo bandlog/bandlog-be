@@ -1,4 +1,4 @@
-package net.effize.bandlog.common.api;
+package net.effize.bandlog.common.exception;
 
 public class BandlogException extends RuntimeException {
     private final ErrorCode errorCode;
