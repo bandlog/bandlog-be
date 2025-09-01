@@ -38,4 +38,9 @@ public class TeamController {
     public TeamInfoResponse getTeamInfoResponse(@AuthUserParam AuthUser authUser, @PathVariable Long teamId) {
         return teamQueryService.teamInfo(authUser.id(), teamId);
     }
+
+    @GetMapping("/me")
+    public TeamsResponse getMyTeams(@AuthUserParam AuthUser authUser) {
+        return teamQueryService.myTeams(authUser.id());
+    }
 }

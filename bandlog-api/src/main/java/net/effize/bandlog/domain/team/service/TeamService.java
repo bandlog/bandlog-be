@@ -41,4 +41,8 @@ public class TeamService {
     public List<Member> membersOf(Team team) {
         return memberRepository.findAllByTeam(team);
     }
+
+    public List<Team> teamsOfUser(UserId userId) {
+        return teamRepository.findAllByMembersUserId(userId.value());
+    }
 }
