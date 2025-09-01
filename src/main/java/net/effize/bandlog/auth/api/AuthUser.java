@@ -1,4 +1,4 @@
-package net.effize.bandlog.auth.application.dto;
+package net.effize.bandlog.auth.api;
 
 import net.effize.bandlog.identity.api.dto.UserDto;
 

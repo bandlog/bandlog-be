@@ -2,7 +2,8 @@ package net.effize.bandlog.auth.infrastructure.resolver;
 
 import net.effize.bandlog.auth.api.AuthUserResolver;
 import net.effize.bandlog.auth.application.AuthApplicationService;
-import net.effize.bandlog.auth.application.dto.AuthUser;
+import net.effize.bandlog.auth.api.AuthUser;
+import net.effize.bandlog.auth.api.AuthUserParam;
 import org.springframework.core.MethodParameter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

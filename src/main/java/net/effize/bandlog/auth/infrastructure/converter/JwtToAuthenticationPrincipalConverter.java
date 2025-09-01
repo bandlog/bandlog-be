@@ -1,7 +1,7 @@
 package net.effize.bandlog.auth.infrastructure.converter;
 
+import net.effize.bandlog.auth.api.AuthenticationPrincipal;
 import net.effize.bandlog.auth.api.JwtAuthenticationConverter;
-import net.effize.bandlog.auth.application.dto.AuthenticationPrincipal;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;

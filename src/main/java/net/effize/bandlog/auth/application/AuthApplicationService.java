@@ -1,7 +1,7 @@
 package net.effize.bandlog.auth.application;
 
-import net.effize.bandlog.auth.application.dto.AuthUser;
-import net.effize.bandlog.auth.application.dto.AuthenticationPrincipal;
+import net.effize.bandlog.auth.api.AuthenticationPrincipal;
+import net.effize.bandlog.auth.api.AuthUser;
 import net.effize.bandlog.auth.application.exception.IllegalAuthenticationException;
 import net.effize.bandlog.auth.application.exception.UserNotSignedUpException;
 import net.effize.bandlog.identity.api.UserService;

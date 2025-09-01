@@ -1,4 +1,4 @@
-package net.effize.bandlog.auth.application.dto;
+package net.effize.bandlog.auth.api;
 
 public record AuthenticationPrincipal(String supabaseUserId, String email) {
 }
