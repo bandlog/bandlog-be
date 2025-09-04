@@ -1,7 +1,7 @@
 package net.effize.bandlog.user.model;
 
 import jakarta.persistence.Embeddable;
-import net.effize.bandlog.domain.user.exception.EmailMalformedException;
+import net.effize.bandlog.user.exception.EmailMalformedException;
 
 @Embeddable
 public record Email(
