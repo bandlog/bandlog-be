@@ -2,8 +2,8 @@ package net.effize.bandlog.auth.service;
 
 import net.effize.bandlog.auth.exception.IllegalAuthenticationException;
 import net.effize.bandlog.auth.exception.UserNotSignedUpException;
+import net.effize.bandlog.auth.model.SupabaseAuthenticationPrincipal;
 import net.effize.bandlog.shared.auth.AuthUser;
-import net.effize.bandlog.shared.auth.SupabaseAuthenticationPrincipal;
 import net.effize.bandlog.user.model.Email;
 import net.effize.bandlog.user.model.SupabaseUserId;
 import net.effize.bandlog.user.model.User;
