@@ -1,6 +1,6 @@
-package net.effize.bandlog.domain.user.model;
+package net.effize.bandlog.user.model;
 
-import net.effize.bandlog.domain.user.exception.EmailMalformedException;
+import net.effize.bandlog.user.exception.EmailMalformedException;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

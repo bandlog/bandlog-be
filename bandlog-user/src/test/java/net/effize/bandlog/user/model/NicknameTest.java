@@ -1,4 +1,4 @@
-package net.effize.bandlog.domain.user.model;
+package net.effize.bandlog.user.model;
 
 import org.junit.jupiter.api.Test;
 
