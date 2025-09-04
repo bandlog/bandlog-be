@@ -1,4 +1,4 @@
-package net.effize.bandlog.domain.user;
+package net.effize.bandlog.user.model;
 
 public record UserId(
         Long value

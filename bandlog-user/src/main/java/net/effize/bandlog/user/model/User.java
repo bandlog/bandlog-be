@@ -1,4 +1,4 @@
-package net.effize.bandlog.domain.user;
+package net.effize.bandlog.user.model;
 
 import net.effize.bandlog.domain.user.model.UserId;
 import org.springframework.data.annotation.CreatedDate;
