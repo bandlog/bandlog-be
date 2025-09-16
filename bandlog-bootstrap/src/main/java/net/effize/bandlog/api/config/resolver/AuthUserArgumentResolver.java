@@ -1,7 +1,7 @@
 package net.effize.bandlog.api.config.resolver;
 
-import net.effize.bandlog.application.auth.AuthApplicationService;
-import net.effize.bandlog.application.auth.dto.AuthUser;
+import net.effize.bandlog.auth.service.AuthService;
+import net.effize.bandlog.shared.auth.AuthUser;
 import org.springframework.core.MethodParameter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,17 +14,15 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 @Component
 public class AuthUserArgumentResolver implements HandlerMethodArgumentResolver {
 
-    private final AuthApplicationService authApplicationService;
+    private final AuthService authService;
 
-    public AuthUserArgumentResolver(AuthApplicationService authApplicationService) {
-        this.authApplicationService = authApplicationService;
+    public AuthUserArgumentResolver(AuthService authService) {
+        this.authService = authService;
     }
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.hasParameterAnnotation(AuthUserParam.class)
-                && parameter.getParameterType().equals(AuthUser.class);
-
+        return parameter.getParameterType().equals(AuthUser.class);
     }
 
     @Override
@@ -36,6 +34,6 @@ public class AuthUserArgumentResolver implements HandlerMethodArgumentResolver {
     ) throws Exception {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        return authApplicationService.authenticate(authentication);
+        return authService.authenticate(authentication);
     }
 }

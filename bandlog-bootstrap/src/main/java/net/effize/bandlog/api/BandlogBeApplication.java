@@ -1,4 +1,4 @@
-package net.effize.bandlog;
+package net.effize.bandlog.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

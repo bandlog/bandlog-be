@@ -1,8 +1,6 @@
 package net.effize.bandlog.api.config.converter;
 
-import net.effize.bandlog.application.auth.dto.AuthenticationPrincipal;
-import net.effize.bandlog.domain.user.model.Email;
-import net.effize.bandlog.domain.user.model.SupabaseUserId;
+import net.effize.bandlog.auth.model.SupabaseAuthenticationPrincipal;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,10 +20,7 @@ public class JwtToAuthenticationPrincipalConverter implements Converter<Jwt, Abs
         String supabaseIdString = jwt.getSubject();
         String emailString = jwt.getClaimAsString("email");
 
-        SupabaseUserId supabaseUserId = new SupabaseUserId(supabaseIdString);
-        Email email = new Email(emailString);
-
-        AuthenticationPrincipal principal = new AuthenticationPrincipal(supabaseUserId, email);
+        SupabaseAuthenticationPrincipal principal = new SupabaseAuthenticationPrincipal(supabaseIdString, emailString);
         Collection<? extends GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_REGISTRATION"));
 
         return UsernamePasswordAuthenticationToken.authenticated(principal, null, authorities);
