@@ -5,5 +5,5 @@ import net.effize.bandlog.port.user.dto.BandlogUserResponse;
 import java.util.List;
 
 public interface BandlogUserPort {
-    public List<BandlogUserResponse> findAllByIdIn(List<Long> ids);
+    List<BandlogUserResponse> findAllByIdIn(List<Long> ids);
 }
