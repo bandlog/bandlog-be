@@ -2,7 +2,7 @@ name: Claude Code Review
 
 on:
   pull_request:
-    types: [opened, synchronize]
+    types: [ opened, synchronize ]
     # Optional: Only run on specific file changes
     paths:
       - "**/*.java"
@@ -44,7 +44,8 @@ jobs:
             ## 프로젝트 아키텍처 컨텍스트
             이 프로젝트는 Hexagonal Architecture(Port & Adapter Pattern)를 사용하여 설계되었습니다:
             - 각 도메인 모듈(bandlog-user, bandlog-team 등)은 독립적인 Bounded Context를 형성
-            - 모듈 간 직접 참조를 금지하고, bandlog-adapters를 통한 간접 참조만 허용
+            - 모듈 간 직접 참조를 금지하고, bandlog-ports를 통한 간접 참조만 허용
+            - bandlog-adapters에서 bandlog-ports를 구현하고, 이것을 bandlog-bootstrap에서 참조하여 Spring Application 구동
             - Port 인터페이스를 통해 의존성 역전 원칙(DIP) 적용
             - 이를 통해 순환 참조 방지 및 높은 응집도 유지
             
@@ -52,6 +53,8 @@ jobs:
             
             ### 1. 아키텍처 준수 검증
             - [ ] 도메인 모듈이 다른 도메인 모듈을 직접 참조하고 있지 않은가?
+            - [ ] 도메인 모듈은 다른 도메인을 참조할 때 Port만을 사용하여 참조하고 있는가?
+            - [ ] 도메인 모듈이 다른 도메인 Adapter 모듈을 직접 참조하고 있지 않은가?
             - [ ] Port 인터페이스가 올바르게 정의되어 있는가?
             - [ ] Adapter 구현이 Port 인터페이스를 올바르게 구현하고 있는가?
             - [ ] 각 모듈의 Bounded Context 경계가 명확하게 유지되고 있는가?
