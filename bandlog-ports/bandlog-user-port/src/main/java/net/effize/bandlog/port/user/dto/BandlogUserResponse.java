@@ -1,4 +1,4 @@
-package net.effize.bandlog.adapter.user.dto;
+package net.effize.bandlog.port.user.dto;
 
 public record BandlogUserResponse(
         Long id,

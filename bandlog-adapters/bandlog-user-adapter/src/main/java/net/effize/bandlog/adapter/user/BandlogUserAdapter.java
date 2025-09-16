@@ -1,6 +1,7 @@
 package net.effize.bandlog.adapter.user;
 
-import net.effize.bandlog.adapter.user.dto.BandlogUserResponse;
+import net.effize.bandlog.port.user.BandlogUserPort;
+import net.effize.bandlog.port.user.dto.BandlogUserResponse;
 import net.effize.bandlog.user.model.UserId;
 import net.effize.bandlog.user.service.UserService;
 import org.springframework.stereotype.Component;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class BandlogUserAdapter {
+public class BandlogUserAdapter implements BandlogUserPort {
     private final UserService userService;
 
     public BandlogUserAdapter(UserService userService) {

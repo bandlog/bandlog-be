@@ -1,5 +1,6 @@
 package net.effize.bandlog.team.service;
 
+import net.effize.bandlog.team.adapter.UserAdapter;
 import net.effize.bandlog.team.dto.response.TeamInfoResponse;
 import net.effize.bandlog.team.dto.response.TeamsResponse;
 import net.effize.bandlog.team.model.Member;
@@ -7,7 +8,6 @@ import net.effize.bandlog.team.model.Team;
 import net.effize.bandlog.team.model.TeamId;
 import net.effize.bandlog.team.model.User;
 import net.effize.bandlog.team.model.UserId;
-import net.effize.bandlog.team.port.UserPort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,11 +17,11 @@ import java.util.stream.Collectors;
 @Service
 public class TeamQueryService {
     private final TeamService teamService;
-    private final UserPort userPort;
+    private final UserAdapter userAdapter;
 
-    public TeamQueryService(TeamService teamService, UserPort userPort) {
+    public TeamQueryService(TeamService teamService, UserAdapter userAdapter) {
         this.teamService = teamService;
-        this.userPort = userPort;
+        this.userAdapter = userAdapter;
     }
 
     public TeamInfoResponse teamInfo(UserId authUserId, Long teamId) {
@@ -30,7 +30,7 @@ public class TeamQueryService {
         long meCount = members.stream().filter(member -> member.userId().equals(authUserId)).count();
         if (meCount <= 0) throw new IllegalStateException("User is not a member of the team");
 
-        List<User> users = userPort.findAllByIdIn(
+        List<User> users = userAdapter.findAllByIdIn(
                 members
                         .stream()
                         .map(Member::userId)
@@ -63,7 +63,7 @@ public class TeamQueryService {
                 teams.stream().map(team -> {
                     List<Member> members = teamService.membersOf(team);
 
-                    List<User> users = userPort.findAllByIdIn(
+                    List<User> users = userAdapter.findAllByIdIn(
                             members
                                     .stream()
                                     .map(Member::userId)

@@ -1,24 +1,22 @@
 package net.effize.bandlog.team.adapter;
 
-import net.effize.bandlog.adapter.user.BandlogUserAdapter;
+import net.effize.bandlog.port.user.BandlogUserPort;
 import net.effize.bandlog.team.model.User;
 import net.effize.bandlog.team.model.UserId;
-import net.effize.bandlog.team.port.UserPort;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
-public class UserAdapter implements UserPort {
-    private final BandlogUserAdapter bandlogUserAdapter;
+public class UserAdapter {
+    private final BandlogUserPort bandlogUserPort;
 
-    public UserAdapter(BandlogUserAdapter bandlogUserAdapter) {
-        this.bandlogUserAdapter = bandlogUserAdapter;
+    public UserAdapter(BandlogUserPort bandlogUserPort) {
+        this.bandlogUserPort = bandlogUserPort;
     }
 
-    @Override
     public List<User> findAllByIdIn(List<UserId> ids) {
-        return bandlogUserAdapter.findAllByIdIn(ids.stream().map(UserId::value).toList())
+        return bandlogUserPort.findAllByIdIn(ids.stream().map(UserId::value).toList())
                 .stream().map(userResponse -> new User(
                         new UserId(userResponse.id()),
                         userResponse.email(),

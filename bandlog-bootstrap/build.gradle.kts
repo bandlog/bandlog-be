@@ -7,6 +7,7 @@ dependencies {
     implementation(project(":bandlog-shared"))
     implementation(project(":bandlog-user"))
     implementation(project(":bandlog-team"))
+    implementation(project(":bandlog-adapters:bandlog-user-adapter"))
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
