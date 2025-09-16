@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class UserAdapter {
+public class BandlogUserAdapter {
     private final UserService userService;
 
-    public UserAdapter(UserService userService) {
+    public BandlogUserAdapter(UserService userService) {
         this.userService = userService;
     }
 
