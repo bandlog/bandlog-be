@@ -4,11 +4,13 @@ on:
   pull_request:
     types: [opened, synchronize]
     # Optional: Only run on specific file changes
-    # paths:
-    #   - "src/**/*.ts"
-    #   - "src/**/*.tsx"
-    #   - "src/**/*.js"
-    #   - "src/**/*.jsx"
+    paths:
+      - "**/*.java"
+      - "**/*.gradle.kts"
+      - "**/application*.yml"
+      - "**/application*.yaml"
+      - "**/application*.properties"
+      - "bandlog-*/src/**"
 
 jobs:
   claude-review:
@@ -37,18 +39,66 @@ jobs:
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           prompt: |
-            Please review this pull request and provide feedback on:
-            - Code quality and best practices
-            - Potential bugs or issues
-            - Performance considerations
-            - Security concerns
-            - Test coverage
+            이 Spring Boot 멀티모듈 프로젝트의 Pull Request를 한국어로 리뷰해주세요.
             
-            Use the repository's CLAUDE.md for guidance on style and conventions. Be constructive and helpful in your feedback.
+            ## 프로젝트 아키텍처 컨텍스트
+            이 프로젝트는 Hexagonal Architecture(Port & Adapter Pattern)를 사용하여 설계되었습니다:
+            - 각 도메인 모듈(bandlog-user, bandlog-team 등)은 독립적인 Bounded Context를 형성
+            - 모듈 간 직접 참조를 금지하고, bandlog-adapters를 통한 간접 참조만 허용
+            - Port 인터페이스를 통해 의존성 역전 원칙(DIP) 적용
+            - 이를 통해 순환 참조 방지 및 높은 응집도 유지
+            
+            ## 리뷰 체크리스트
+            
+            ### 1. 아키텍처 준수 검증
+            - [ ] 도메인 모듈이 다른 도메인 모듈을 직접 참조하고 있지 않은가?
+            - [ ] Port 인터페이스가 올바르게 정의되어 있는가?
+            - [ ] Adapter 구현이 Port 인터페이스를 올바르게 구현하고 있는가?
+            - [ ] 각 모듈의 Bounded Context 경계가 명확하게 유지되고 있는가?
+            - [ ] 순환 참조가 발생하지 않는가?
+            
+            ### 2. Spring Boot 베스트 프랙티스
+            - [ ] @Component, @Service, @Repository 등 스테레오타입 어노테이션이 적절히 사용되었는가?
+            - [ ] 의존성 주입이 생성자 주입 방식으로 구현되었는가?
+            - [ ] @Transactional이 적절한 범위에서 사용되었는가?
+            - [ ] 설정 클래스가 @Configuration과 @Bean을 올바르게 사용하는가?
+            
+            ### 3. JPA/데이터베이스 관련
+            - [ ] N+1 쿼리 문제가 발생할 가능성이 있는가?
+            - [ ] Lazy/Eager 로딩이 적절히 설정되었는가?
+            - [ ] 트랜잭션 경계가 올바르게 설정되었는가?
+            - [ ] 엔티티와 DTO가 명확히 분리되어 있는가?
+            
+            ### 4. REST API 설계
+            - [ ] RESTful 원칙을 따르고 있는가?
+            - [ ] HTTP 상태 코드가 적절히 사용되었는가?
+            - [ ] 요청/응답 DTO가 명확하게 정의되었는가?
+            - [ ] API 버저닝 전략이 일관되게 적용되었는가?
+            
+            ### 5. 코드 품질
+            - [ ] 예외 처리가 적절히 구현되었는가?
+            - [ ] 로깅이 적절한 레벨로 구현되었는가?
+            - [ ] 코드 중복이 없는가?
+            - [ ] 네이밍 컨벤션이 일관되게 적용되었는가?
+            
+            ### 6. 보안
+            - [ ] 민감한 정보가 노출되지 않는가?
+            - [ ] SQL Injection 등 보안 취약점이 없는가?
+            - [ ] 인증/인가가 적절히 구현되었는가?
+            
+            ### 7. 테스트
+            - [ ] 단위 테스트가 작성되었는가?
+            - [ ] 통합 테스트가 필요한 경우 작성되었는가?
+            - [ ] 테스트 커버리지가 충분한가?
+            
+            리뷰 코멘트는 한국어로 작성하되, 코드 예제는 영어로 유지해주세요.
+            구체적이고 건설적인 피드백을 제공하고, 개선 제안사항이 있다면 예시 코드와 함께 설명해주세요.
+            
+            Use the repository's CLAUDE.md for additional guidance on style and conventions.
 
             Use `gh pr comment` with your Bash tool to leave your review as a comment on the PR.
           
           # See https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md
           # or https://docs.anthropic.com/en/docs/claude-code/sdk#command-line for available options
-          claude_args: '--allowed-tools "Bash(gh issue view:*),Bash(gh search:*),Bash(gh issue list:*),Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*),Bash(gh pr list:*)"'
+          claude_args: '--allowed-tools "Bash(gh issue view:*),Bash(gh search:*),Bash(gh issue list:*),Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*),Bash(gh pr list:*),Bash(./gradlew test:*),Bash(./gradlew build:*),Bash(grep -r:*)"'
 
