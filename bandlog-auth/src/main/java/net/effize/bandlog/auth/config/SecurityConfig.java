@@ -1,6 +1,6 @@
-package net.effize.bandlog.api.config;
+package net.effize.bandlog.auth.config;
 
-import net.effize.bandlog.api.config.converter.JwtToAuthenticationPrincipalConverter;
+import net.effize.bandlog.auth.converter.JwtToAuthenticationPrincipalConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

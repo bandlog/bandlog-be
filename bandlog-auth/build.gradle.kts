@@ -5,8 +5,10 @@ plugins {
 
 dependencies {
     implementation(project(":bandlog-shared"))
+    implementation(project(":bandlog-ports:bandlog-user-port"))
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
