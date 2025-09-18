@@ -1,4 +1,4 @@
-package net.effize.bandlog.api.config.resolver;
+package net.effize.bandlog.auth.resolver;
 
 import net.effize.bandlog.auth.service.AuthService;
 import net.effize.bandlog.shared.auth.AuthUser;

@@ -1,4 +1,4 @@
-package net.effize.bandlog.api.config.converter;
+package net.effize.bandlog.auth.converter;
 
 import net.effize.bandlog.auth.model.SupabaseAuthenticationPrincipal;
 import org.springframework.core.convert.converter.Converter;
