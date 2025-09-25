@@ -24,6 +24,9 @@ class RehearsalSongInstrument(
     @Column(name = "order")
     val order: Int,
 
+    @OneToMany(mappedBy = "rehearsalSongInstrument", cascade = [CascadeType.ALL], orphanRemoval = true)
+    val members: MutableList<RehearsalSongInstrumentMember> = mutableListOf(),
+
     @Column(name = "created_at")
     @CreatedDate
     val createdAt: Instant,
