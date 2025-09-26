@@ -21,13 +21,13 @@ class Rehearsal(
     val title: String,
 
     @Column(name = "description")
-    val description: String? = null,
+    val description: String?,
 
     @Column(name = "scheduled_at")
     val scheduledAt: Instant,
 
     @Column(name = "location")
-    val location: String? = null,
+    val location: String?,
 
     @OneToMany(mappedBy = "rehearsal", cascade = [CascadeType.ALL], orphanRemoval = true)
     val songs: MutableList<RehearsalSong> = mutableListOf(),
@@ -39,4 +39,13 @@ class Rehearsal(
     @Column(name = "updated_at")
     @LastModifiedDate
     lateinit var updatedAt: Instant
+
+    constructor(teamId: Long, title: String, description: String?, scheduledAt: Instant, location: String?) : this(
+        id = 0L,
+        teamId = teamId,
+        title = title,
+        description = description,
+        scheduledAt = scheduledAt,
+        location = location,
+    )
 }
