@@ -31,12 +31,12 @@ class Rehearsal(
 
     @OneToMany(mappedBy = "rehearsal", cascade = [CascadeType.ALL], orphanRemoval = true)
     val songs: MutableList<RehearsalSong> = mutableListOf(),
-
-    @Column(name = "created_at")
+) {
+    @Column(name = "created_at", updatable = false)
     @CreatedDate
-    val createdAt: Instant,
+    lateinit var createdAt: Instant
 
     @Column(name = "updated_at")
     @LastModifiedDate
-    val updatedAt: Instant,
-)
+    lateinit var updatedAt: Instant
+}
