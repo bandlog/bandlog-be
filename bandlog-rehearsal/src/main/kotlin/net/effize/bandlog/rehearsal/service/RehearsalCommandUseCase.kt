@@ -23,7 +23,7 @@ class RehearsalCommandUseCase(
     private val teamAdapter: TeamAdapter
 ) {
     fun createRehearsal(authUser: AuthUser, createRehearsalRequest: CreateRehearsalRequest): CreateRehearsalResponse {
-        if (teamAdapter.isUserLeaderOfTeam(authUser.id, createRehearsalRequest.teamId)) {
+        if (!teamAdapter.isUserLeaderOfTeam(authUser.id, createRehearsalRequest.teamId)) {
             throw IllegalStateException("Cannot create rehearsal for team you are not leader of")
         }
 
@@ -45,7 +45,7 @@ class RehearsalCommandUseCase(
         rehearsalId: Long,
         addRehearsalSongRequest: AddRehearsalSongRequest
     ): AddRehearsalSongResponse {
-        if (teamAdapter.isUserLeaderOfTeam(authUser.id, addRehearsalSongRequest.teamId)) {
+        if (!teamAdapter.isUserLeaderOfTeam(authUser.id, addRehearsalSongRequest.teamId)) {
             throw IllegalStateException("Cannot add song to rehearsal you are not leader of")
         }
 
@@ -68,7 +68,7 @@ class RehearsalCommandUseCase(
         rehearsalSongId: Long,
         addRehearsalSongInstrumentRequest: AddRehearsalSongInstrumentRequest
     ): AddRehearsalSongInstrumentResponse {
-        if (teamAdapter.isUserLeaderOfTeam(authUser.id, addRehearsalSongInstrumentRequest.teamId)) {
+        if (!teamAdapter.isUserLeaderOfTeam(authUser.id, addRehearsalSongInstrumentRequest.teamId)) {
             throw IllegalStateException("Cannot add instrument to rehearsal you are not leader of")
         }
 
@@ -95,10 +95,10 @@ class RehearsalCommandUseCase(
         rehearsalSongInstrumentId: Long,
         assignMemberRequest: AssignMemberToInstrumentRequest
     ): AssignMemberToInstrumentResponse {
-        if (teamAdapter.isUserLeaderOfTeam(authUser.id, assignMemberRequest.teamId)) {
+        if (!teamAdapter.isUserLeaderOfTeam(authUser.id, assignMemberRequest.teamId)) {
             throw IllegalStateException("Cannot assign member to rehearsal you are not leader of")
         }
-        if (teamAdapter.isUserMemberOfTeam(authUser.id, assignMemberRequest.teamId)) {
+        if (!teamAdapter.isUserMemberOfTeam(authUser.id, assignMemberRequest.teamId)) {
             throw IllegalStateException("Cannot assign member to rehearsal you are not a member of")
         }
 
