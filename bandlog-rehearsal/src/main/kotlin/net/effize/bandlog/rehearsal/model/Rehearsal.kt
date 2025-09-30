@@ -56,7 +56,6 @@ class Rehearsal(
     }
 
     fun addSong(rehearsalSong: RehearsalSong) {
-        // order 중 가장 큰 값을 구하여 order가 겹치지 않게 합니다.
         _songs.add(rehearsalSong)
         rehearsalSong.assignRehearsal(this)
     }
