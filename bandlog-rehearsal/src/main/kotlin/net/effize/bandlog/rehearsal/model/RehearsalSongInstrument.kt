@@ -14,19 +14,21 @@ class RehearsalSongInstrument(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0L,
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "rehearsal_song_id")
-    val rehearsalSong: RehearsalSong,
-
     @Column(name = "instrument")
     val instrument: String,
 
     @Column(name = "order")
     val order: Int,
 
-    @OneToMany(mappedBy = "rehearsalSongInstrument", cascade = [CascadeType.ALL], orphanRemoval = true)
-    val members: MutableList<RehearsalSongInstrumentMember> = mutableListOf(),
+    @Column(name = "member_id")
+    private var memberId: Long? = null,
 ) {
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rehearsal_song_id")
+    private lateinit var rehearsalSong: RehearsalSong
+
+
     @Column(name = "created_at", updatable = false)
     @CreatedDate
     lateinit var createdAt: Instant
@@ -34,4 +36,14 @@ class RehearsalSongInstrument(
     @Column(name = "updated_at")
     @LastModifiedDate
     lateinit var updatedAt: Instant
+
+    constructor(instrument: String, order: Int) : this(0L, instrument, order)
+
+    fun assignRehearsalSong(rehearsalSong: RehearsalSong) {
+        this.rehearsalSong = rehearsalSong
+    }
+
+    fun assignMember(memberId: Long) {
+        this.memberId = memberId
+    }
 }

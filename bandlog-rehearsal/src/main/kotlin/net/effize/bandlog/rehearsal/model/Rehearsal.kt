@@ -30,8 +30,10 @@ class Rehearsal(
     val location: String?,
 
     @OneToMany(mappedBy = "rehearsal", cascade = [CascadeType.ALL], orphanRemoval = true)
-    val songs: MutableList<RehearsalSong> = mutableListOf(),
+    private val _songs: MutableList<RehearsalSong> = mutableListOf(),
 ) {
+    val songs: List<RehearsalSong> = _songs
+
     @Column(name = "created_at", updatable = false)
     @CreatedDate
     lateinit var createdAt: Instant
@@ -48,4 +50,14 @@ class Rehearsal(
         scheduledAt = scheduledAt,
         location = location,
     )
+
+    fun lastSongOrder(): Int {
+        return songs.maxOfOrNull { it.order } ?: 0
+    }
+
+    fun addSong(rehearsalSong: RehearsalSong) {
+        // order 중 가장 큰 값을 구하여 order가 겹치지 않게 합니다.
+        _songs.add(rehearsalSong)
+        rehearsalSong.assignRehearsal(this)
+    }
 }
