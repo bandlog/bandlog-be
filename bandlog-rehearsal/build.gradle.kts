@@ -12,6 +12,7 @@ kotlin {
 
 dependencies {
     implementation(project(":bandlog-shared"))
+    implementation(project(":bandlog-ports:bandlog-team-port"))
 
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
