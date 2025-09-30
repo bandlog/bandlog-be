@@ -16,12 +16,14 @@ import net.effize.bandlog.rehearsal.repository.RehearsalRepository
 import net.effize.bandlog.shared.auth.AuthUser
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class RehearsalCommandUseCase(
     private val rehearsalRepository: RehearsalRepository,
     private val teamAdapter: TeamAdapter
 ) {
+    @Transactional
     fun createRehearsal(authUser: AuthUser, createRehearsalRequest: CreateRehearsalRequest): CreateRehearsalResponse {
         if (!teamAdapter.isUserLeaderOfTeam(authUser.id, createRehearsalRequest.teamId)) {
             throw IllegalStateException("Cannot create rehearsal for team you are not leader of")
@@ -40,6 +42,7 @@ class RehearsalCommandUseCase(
         return CreateRehearsalResponse(savedRehearsal.id)
     }
 
+    @Transactional
     fun addRehearsalSong(
         authUser: AuthUser,
         rehearsalId: Long,
@@ -62,6 +65,7 @@ class RehearsalCommandUseCase(
         return AddRehearsalSongResponse(savedRehearsal.id)
     }
 
+    @Transactional
     fun addRehearsalSongInstrument(
         authUser: AuthUser,
         rehearsalId: Long,
@@ -88,6 +92,7 @@ class RehearsalCommandUseCase(
         return AddRehearsalSongInstrumentResponse(savedRehearsal.id)
     }
 
+    @Transactional
     fun assignMember(
         authUser: AuthUser,
         rehearsalId: Long,
