@@ -10,8 +10,6 @@ import net.effize.bandlog.rehearsal.dto.response.AddRehearsalSongResponse
 import net.effize.bandlog.rehearsal.dto.response.AssignMemberToInstrumentResponse
 import net.effize.bandlog.rehearsal.dto.response.CreateRehearsalResponse
 import net.effize.bandlog.rehearsal.model.Rehearsal
-import net.effize.bandlog.rehearsal.model.RehearsalSong
-import net.effize.bandlog.rehearsal.model.RehearsalSongInstrument
 import net.effize.bandlog.rehearsal.repository.RehearsalRepository
 import net.effize.bandlog.shared.auth.AuthUser
 import org.springframework.data.repository.findByIdOrNull
@@ -55,14 +53,9 @@ class RehearsalCommandUseCase(
         val rehearsal = rehearsalRepository.findByIdOrNull(rehearsalId)
             ?: throw IllegalArgumentException("Rehearsal with id $rehearsalId not found")
 
-        val lastSongOrder = rehearsal.lastSongOrder()
-        val newSong = RehearsalSong(addRehearsalSongRequest.title, lastSongOrder + 1)
+        rehearsal.addSongWithTitle(addRehearsalSongRequest.title)
 
-        rehearsal.addSong(newSong)
-
-        val savedRehearsal = rehearsalRepository.save(rehearsal)
-
-        return AddRehearsalSongResponse(savedRehearsal.id)
+        return AddRehearsalSongResponse(rehearsal.id)
     }
 
     @Transactional
@@ -79,17 +72,9 @@ class RehearsalCommandUseCase(
         val rehearsal = rehearsalRepository.findByIdOrNull(rehearsalId)
             ?: throw IllegalArgumentException("Rehearsal with id $rehearsalId not found")
 
-        val song = rehearsal.songs.find { it.id == rehearsalSongId }
-            ?: throw IllegalArgumentException("Rehearsal song with id $rehearsalSongId not found")
-        val lastInstrumentOrder = song.lastInstrumentOrder()
+        rehearsal.addInstrumentToSong(rehearsalSongId, addRehearsalSongInstrumentRequest.instrument)
 
-        val newInstrument =
-            RehearsalSongInstrument(addRehearsalSongInstrumentRequest.instrument, lastInstrumentOrder + 1)
-        song.addInstrument(newInstrument)
-
-        val savedRehearsal = rehearsalRepository.save(rehearsal)
-
-        return AddRehearsalSongInstrumentResponse(savedRehearsal.id)
+        return AddRehearsalSongInstrumentResponse(rehearsal.id)
     }
 
     @Transactional
@@ -110,16 +95,8 @@ class RehearsalCommandUseCase(
         val rehearsal = rehearsalRepository.findByIdOrNull(rehearsalId)
             ?: throw IllegalArgumentException("Rehearsal with id $rehearsalId not found")
 
-        val song = rehearsal.songs.find { it.id == rehearsalSongId }
-            ?: throw IllegalArgumentException("Rehearsal song with id $rehearsalSongId not found")
+        rehearsal.assignMemberToInstrument(rehearsalSongId, rehearsalSongInstrumentId, assignMemberRequest.memberId)
 
-        val instrument = rehearsalSongInstrumentId.let { song.instruments.find { i -> i.id == it } }
-            ?: throw IllegalArgumentException("Rehearsal song instrument with id $rehearsalSongInstrumentId not found")
-
-        instrument.assignMember(assignMemberRequest.memberId)
-
-        val savedRehearsal = rehearsalRepository.save(rehearsal)
-
-        return AssignMemberToInstrumentResponse(savedRehearsal.id)
+        return AssignMemberToInstrumentResponse(rehearsal.id)
     }
 }
