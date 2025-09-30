@@ -1,0 +1,66 @@
+package net.effize.bandlog.rehearsal.controller
+
+import net.effize.bandlog.rehearsal.dto.request.AddRehearsalSongInstrumentRequest
+import net.effize.bandlog.rehearsal.dto.request.AddRehearsalSongRequest
+import net.effize.bandlog.rehearsal.dto.request.AssignMemberToInstrumentRequest
+import net.effize.bandlog.rehearsal.dto.request.CreateRehearsalRequest
+import net.effize.bandlog.rehearsal.dto.response.AddRehearsalSongInstrumentResponse
+import net.effize.bandlog.rehearsal.dto.response.AddRehearsalSongResponse
+import net.effize.bandlog.rehearsal.dto.response.AssignMemberToInstrumentResponse
+import net.effize.bandlog.rehearsal.dto.response.CreateRehearsalResponse
+import net.effize.bandlog.rehearsal.service.RehearsalCommandUseCase
+import net.effize.bandlog.shared.auth.AuthUser
+import org.springframework.web.bind.annotation.*
+
+@RestController
+@RequestMapping("/api/v1/rehearsal")
+class RehearsalController(
+    private val rehearsalCommandUseCase: RehearsalCommandUseCase
+) {
+
+    @PostMapping
+    fun createRehearsal(authUser: AuthUser, createRehearsalRequest: CreateRehearsalRequest): CreateRehearsalResponse {
+        return rehearsalCommandUseCase.createRehearsal(authUser, createRehearsalRequest)
+    }
+
+    @PostMapping("/{rehearsalId}/song")
+    fun addRehearsalSong(
+        authUser: AuthUser,
+        @PathVariable rehearsalId: Long,
+        @RequestBody addRehearsalSongRequest: AddRehearsalSongRequest
+    ): AddRehearsalSongResponse {
+        return rehearsalCommandUseCase.addRehearsalSong(authUser, rehearsalId, addRehearsalSongRequest)
+    }
+
+    @PostMapping("/{rehearsalId}/song/{rehearsalSongId}/instrument")
+    fun addRehearsalSongInstrument(
+        authUser: AuthUser,
+        @PathVariable rehearsalId: Long,
+        @PathVariable rehearsalSongId: Long,
+        @RequestBody addRehearsalSongInstrumentRequest: AddRehearsalSongInstrumentRequest
+    ): AddRehearsalSongInstrumentResponse {
+        return rehearsalCommandUseCase.addRehearsalSongInstrument(
+            authUser,
+            rehearsalId,
+            rehearsalSongId,
+            addRehearsalSongInstrumentRequest
+        )
+    }
+
+    @PutMapping("/{rehearsalId}/song/{rehearsalSongId}/instrument/{rehearsalSongInstrumentId}/member")
+    fun assignMember(
+        authUser: AuthUser,
+        @PathVariable rehearsalId: Long,
+        @PathVariable rehearsalSongId: Long,
+        @PathVariable rehearsalSongInstrumentId: Long,
+        @RequestBody assignMemberRequest: AssignMemberToInstrumentRequest
+    ): AssignMemberToInstrumentResponse {
+        return rehearsalCommandUseCase.assignMember(
+            authUser,
+            rehearsalId,
+            rehearsalSongId,
+            rehearsalSongInstrumentId,
+            assignMemberRequest
+        )
+    }
+}
