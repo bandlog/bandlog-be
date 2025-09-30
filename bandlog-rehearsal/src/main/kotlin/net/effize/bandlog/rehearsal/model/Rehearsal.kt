@@ -51,15 +51,6 @@ class Rehearsal(
         location = location,
     )
 
-    fun lastSongOrder(): Int {
-        return songs.maxOfOrNull { it.order } ?: 0
-    }
-
-    fun addSong(rehearsalSong: RehearsalSong) {
-        _songs.add(rehearsalSong)
-        rehearsalSong.assignRehearsal(this)
-    }
-
     fun addSongWithTitle(title: String) {
         val order = lastSongOrder() + 1
         val newSong = RehearsalSong(title, order)
@@ -67,21 +58,26 @@ class Rehearsal(
     }
 
     fun addInstrumentToSong(songId: Long, instrument: String) {
-        val song = _songs.find { it.id == songId }
-            ?: throw IllegalArgumentException("Rehearsal song with id $songId not found")
-
-        val order = song.lastInstrumentOrder() + 1
-        val newInstrument = RehearsalSongInstrument(instrument, order)
-        song.addInstrument(newInstrument)
+        val song = findSong(songId)
+        song.addInstrumentWithName(instrument)
     }
 
     fun assignMemberToInstrument(songId: Long, instrumentId: Long, memberId: Long) {
-        val song = _songs.find { it.id == songId }
+        val song = findSong(songId)
+        song.assignMemberToInstrument(instrumentId, memberId)
+    }
+
+    private fun lastSongOrder(): Int {
+        return songs.maxOfOrNull { it.order } ?: 0
+    }
+
+    private fun addSong(rehearsalSong: RehearsalSong) {
+        _songs.add(rehearsalSong)
+        rehearsalSong.assignRehearsal(this)
+    }
+
+    private fun findSong(songId: Long): RehearsalSong {
+        return _songs.find { it.id == songId }
             ?: throw IllegalArgumentException("Rehearsal song with id $songId not found")
-
-        val instrument = song.instruments.find { it.id == instrumentId }
-            ?: throw IllegalArgumentException("Rehearsal song instrument with id $instrumentId not found")
-
-        instrument.assignMember(memberId)
     }
 }

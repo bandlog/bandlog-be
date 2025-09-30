@@ -47,11 +47,23 @@ class RehearsalSong(
         this.rehearsal = rehearsal
     }
 
-    fun lastInstrumentOrder(): Int {
+    fun addInstrumentWithName(instrumentName: String) {
+        val order = lastInstrumentOrder() + 1
+        val newInstrument = RehearsalSongInstrument(instrumentName, order)
+        addInstrument(newInstrument)
+    }
+
+    fun assignMemberToInstrument(instrumentId: Long, memberId: Long) {
+        val instrument = _instruments.find { it.id == instrumentId }
+            ?: throw IllegalArgumentException("Rehearsal song instrument with id $instrumentId not found")
+        instrument.assignMember(memberId)
+    }
+
+    private fun lastInstrumentOrder(): Int {
         return instruments.maxOfOrNull { it.order } ?: 0
     }
 
-    fun addInstrument(instrument: RehearsalSongInstrument) {
+    private fun addInstrument(instrument: RehearsalSongInstrument) {
         _instruments.add(instrument)
         instrument.assignRehearsalSong(this)
     }

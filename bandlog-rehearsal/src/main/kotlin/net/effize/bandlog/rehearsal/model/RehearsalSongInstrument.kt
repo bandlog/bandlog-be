@@ -21,9 +21,8 @@ class RehearsalSongInstrument(
     val order: Int,
 
     @Column(name = "member_id")
-    private var memberId: Long? = null,
+    private var _memberId: Long? = null,
 ) {
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rehearsal_song_id")
     private lateinit var rehearsalSong: RehearsalSong
@@ -44,6 +43,6 @@ class RehearsalSongInstrument(
     }
 
     fun assignMember(memberId: Long) {
-        this.memberId = memberId
+        this._memberId = memberId
     }
 }
