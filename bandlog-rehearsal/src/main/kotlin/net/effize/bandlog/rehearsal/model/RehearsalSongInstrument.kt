@@ -17,7 +17,7 @@ class RehearsalSongInstrument(
     @Column(name = "instrument")
     val instrument: String,
 
-    @Column(name = "order")
+    @Column(name = "sort_order")
     val order: Int,
 
     @Column(name = "member_id")

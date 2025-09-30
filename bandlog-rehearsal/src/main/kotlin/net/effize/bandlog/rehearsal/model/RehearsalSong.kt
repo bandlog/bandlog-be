@@ -17,7 +17,7 @@ class RehearsalSong(
     @Column(name = "title")
     val title: String,
 
-    @Column(name = "order")
+    @Column(name = "sort_order")
     val order: Int,
 
     @OneToMany(mappedBy = "rehearsalSong", cascade = [CascadeType.ALL], orphanRemoval = true)
