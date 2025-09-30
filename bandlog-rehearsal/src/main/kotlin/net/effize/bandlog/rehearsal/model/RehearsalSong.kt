@@ -11,6 +11,7 @@ import java.time.Instant
 @EntityListeners(AuditingEntityListener::class)
 class RehearsalSong(
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0L,
 
     @Column(name = "title")
