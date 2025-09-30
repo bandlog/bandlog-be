@@ -11,7 +11,7 @@ class TeamAdapter(
         return teamPort.isUserLeaderOfTeam(userId, teamId)
     }
 
-    fun isUserMemberOfTeam(userId: Long, teamId: Long): Boolean {
-        return teamPort.isUserMemberOfTeam(userId, teamId)
+    fun isMemberOfTeam(memberId: Long, teamId: Long): Boolean {
+        return teamPort.isMemberOfTeam(memberId, teamId)
     }
 }

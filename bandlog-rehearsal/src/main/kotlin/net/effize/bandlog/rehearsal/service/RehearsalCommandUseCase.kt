@@ -98,7 +98,7 @@ class RehearsalCommandUseCase(
         if (!teamAdapter.isUserLeaderOfTeam(authUser.id, assignMemberRequest.teamId)) {
             throw IllegalStateException("Cannot assign member to rehearsal you are not leader of")
         }
-        if (!teamAdapter.isUserMemberOfTeam(authUser.id, assignMemberRequest.teamId)) {
+        if (!teamAdapter.isMemberOfTeam(assignMemberRequest.memberId, assignMemberRequest.teamId)) {
             throw IllegalStateException("Cannot assign member to rehearsal you are not a member of")
         }
 
