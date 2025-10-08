@@ -44,7 +44,7 @@ class RehearsalSong(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rehearsal_id")
-    private lateinit var rehearsal: Rehearsal
+    private var rehearsal: Rehearsal? = null
 
     @Column(name = "created_at", updatable = false)
     @CreatedDate
@@ -62,6 +62,10 @@ class RehearsalSong(
 
     fun assignRehearsal(rehearsal: Rehearsal) {
         this.rehearsal = rehearsal
+    }
+
+    fun detachFromRehearsal() {
+        this.rehearsal = null
     }
 
     fun addInstrumentWithName(instrumentName: String) {
@@ -90,6 +94,7 @@ class RehearsalSong(
             ?: throw IllegalArgumentException("Rehearsal song instrument with id $instrumentId not found")
         // 마지막 위치로 이동한 후 삭제하여 order 재정렬
         reorderInstruments(instrument, instrument.order, lastInstrumentOrder())
+        instrument.detachFromRehearsalSong()
         _instruments.remove(instrument)
     }
 

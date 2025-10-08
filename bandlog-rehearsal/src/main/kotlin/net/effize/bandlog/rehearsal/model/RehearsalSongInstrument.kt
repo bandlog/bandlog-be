@@ -40,7 +40,7 @@ class RehearsalSongInstrument(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rehearsal_song_id")
-    private lateinit var rehearsalSong: RehearsalSong
+    private var rehearsalSong: RehearsalSong? = null
 
 
     @Column(name = "created_at", updatable = false)
@@ -55,6 +55,10 @@ class RehearsalSongInstrument(
 
     fun assignRehearsalSong(rehearsalSong: RehearsalSong) {
         this.rehearsalSong = rehearsalSong
+    }
+
+    fun detachFromRehearsalSong() {
+        this.rehearsalSong = null
     }
 
     fun assignMember(memberId: Long) {
