@@ -104,9 +104,9 @@ class Rehearsal(
         }
     }
 
-    fun modifySongInstrument(songId: Long, songInstrumentId: Long, instrument: String) {
+    fun modifySongInstrument(songId: Long, songInstrumentId: Long, instrument: String, order: Int) {
         val song = findSong(songId)
-        song.modifyInstrument(songInstrumentId, instrument)
+        song.modifyInstrument(songInstrumentId, instrument, order)
     }
 
     fun modifyInstrumentOrder(songId: Long, instrumentId: Long, newOrder: Int) {

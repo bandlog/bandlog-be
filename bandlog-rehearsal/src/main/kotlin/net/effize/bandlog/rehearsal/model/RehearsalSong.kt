@@ -67,10 +67,19 @@ class RehearsalSong(
         addInstrument(newInstrument)
     }
 
-    fun modifyInstrument(instrumentId: Long, instrumentName: String) {
+    fun modifyInstrument(instrumentId: Long, instrumentName: String, newOrder: Int) {
+        validateInstrumentOrder(newOrder)
+
         val instrument = _instruments.find { it.id == instrumentId }
             ?: throw IllegalArgumentException("Rehearsal song instrument with id $instrumentId not found")
+
+        val oldOrder = instrument.order
+
         instrument.modifyInstrument(instrumentName)
+
+        if (oldOrder != newOrder) {
+            reorderInstruments(instrument, oldOrder, newOrder)
+        }
     }
 
     fun deleteInstrument(instrumentId: Long) {

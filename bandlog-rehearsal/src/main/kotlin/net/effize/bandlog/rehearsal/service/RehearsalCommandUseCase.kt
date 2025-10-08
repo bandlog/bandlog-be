@@ -142,7 +142,8 @@ class RehearsalCommandUseCase(
         rehearsal.modifySongInstrument(
             rehearsalSongId,
             rehearsalSongInstrumentId,
-            modifyRehearsalSongInstrumentRequest.instrument
+            modifyRehearsalSongInstrumentRequest.instrument,
+            modifyRehearsalSongInstrumentRequest.order
         )
 
         return ModifyRehearsalSongResponse(rehearsal.id)
