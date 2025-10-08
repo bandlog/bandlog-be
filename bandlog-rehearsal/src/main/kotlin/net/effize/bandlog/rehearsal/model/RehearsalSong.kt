@@ -36,7 +36,8 @@ class RehearsalSong(
 ) {
     val instruments: List<RehearsalSongInstrument> = _instruments
 
-    val order: Int = _order
+    val order: Int
+        get() = _order
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rehearsal_id")
