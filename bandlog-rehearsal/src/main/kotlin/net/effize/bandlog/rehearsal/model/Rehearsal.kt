@@ -109,11 +109,6 @@ class Rehearsal(
         song.modifyInstrument(songInstrumentId, instrument, order)
     }
 
-    fun modifyInstrumentOrder(songId: Long, instrumentId: Long, newOrder: Int) {
-        val song = findSong(songId)
-        song.modifyInstrumentOrder(instrumentId, newOrder)
-    }
-
     fun deleteSong(songId: Long) {
         val song = findSong(songId)
         // 마지막 위치로 이동한 후 삭제하여 order 재정렬
