@@ -27,13 +27,16 @@ class RehearsalSongInstrument(
     private var _instrument: String,
 
     @Column(name = "sort_order")
-    val order: Int,
+    private var _order: Int,
 
     @Column(name = "member_id")
     private var _memberId: Long? = null,
 ) {
     val instrument: String
         get() = _instrument
+
+    val order: Int
+        get() = _order
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rehearsal_song_id")
@@ -60,5 +63,9 @@ class RehearsalSongInstrument(
 
     fun modifyInstrument(newInstrument: String) {
         this._instrument = newInstrument
+    }
+
+    fun modifyOrder(order: Int) {
+        this._order = order
     }
 }
