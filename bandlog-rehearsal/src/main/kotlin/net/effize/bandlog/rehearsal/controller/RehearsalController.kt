@@ -14,6 +14,7 @@ import net.effize.bandlog.rehearsal.dto.response.CreateRehearsalResponse
 import net.effize.bandlog.rehearsal.dto.response.ModifyRehearsalResponse
 import net.effize.bandlog.rehearsal.dto.response.ModifyRehearsalSongResponse
 import net.effize.bandlog.rehearsal.service.RehearsalCommandUseCase
+import net.effize.bandlog.rehearsal.service.RehearsalSongCommandUseCase
 import net.effize.bandlog.shared.auth.AuthUser
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -26,7 +27,8 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/v1/rehearsal")
 class RehearsalController(
-    private val rehearsalCommandUseCase: RehearsalCommandUseCase
+    private val rehearsalCommandUseCase: RehearsalCommandUseCase,
+    private val rehearsalSongCommandUseCase: RehearsalSongCommandUseCase
 ) {
 
     @PostMapping
@@ -40,7 +42,7 @@ class RehearsalController(
         @PathVariable rehearsalId: Long,
         @RequestBody addRehearsalSongRequest: AddRehearsalSongRequest
     ): AddRehearsalSongResponse {
-        return rehearsalCommandUseCase.addRehearsalSong(authUser, rehearsalId, addRehearsalSongRequest)
+        return rehearsalSongCommandUseCase.addRehearsalSong(authUser, rehearsalId, addRehearsalSongRequest)
     }
 
     @PostMapping("/{rehearsalId}/song/{rehearsalSongId}/instrument")
@@ -95,7 +97,7 @@ class RehearsalController(
         @PathVariable rehearsalSongId: Long,
         @RequestBody modifyRehearsalSongRequest: ModifyRehearsalSongRequest
     ): ModifyRehearsalSongResponse {
-        return rehearsalCommandUseCase.modifyRehearsalSong(
+        return rehearsalSongCommandUseCase.modifyRehearsalSong(
             authUser,
             rehearsalId,
             rehearsalSongId,
@@ -127,7 +129,7 @@ class RehearsalController(
 
     @DeleteMapping("/{rehearsalId}/song/{rehearsalSongId}")
     fun deleteRehearsalSong(authUser: AuthUser, @PathVariable rehearsalId: Long, @PathVariable rehearsalSongId: Long) {
-        rehearsalCommandUseCase.deleteRehearsalSong(authUser, rehearsalId, rehearsalSongId)
+        rehearsalSongCommandUseCase.deleteRehearsalSong(authUser, rehearsalId, rehearsalSongId)
     }
 
     @DeleteMapping("/{rehearsalId}/song/{rehearsalSongId}/instrument/{rehearsalSongInstrumentId}")
