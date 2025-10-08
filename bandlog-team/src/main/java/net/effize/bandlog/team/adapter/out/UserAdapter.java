@@ -1,4 +1,4 @@
-package net.effize.bandlog.team.adapter;
+package net.effize.bandlog.team.adapter.out;
 
 import net.effize.bandlog.port.user.BandlogUserPort;
 import net.effize.bandlog.team.model.User;

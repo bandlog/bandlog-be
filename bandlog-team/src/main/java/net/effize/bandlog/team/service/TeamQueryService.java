@@ -1,6 +1,6 @@
 package net.effize.bandlog.team.service;
 
-import net.effize.bandlog.team.adapter.UserAdapter;
+import net.effize.bandlog.team.adapter.out.UserAdapter;
 import net.effize.bandlog.team.dto.response.TeamInfoResponse;
 import net.effize.bandlog.team.dto.response.TeamsResponse;
 import net.effize.bandlog.team.model.Member;
