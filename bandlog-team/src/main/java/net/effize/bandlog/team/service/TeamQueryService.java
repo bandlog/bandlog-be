@@ -4,6 +4,7 @@ import net.effize.bandlog.team.adapter.out.UserAdapter;
 import net.effize.bandlog.team.dto.response.TeamInfoResponse;
 import net.effize.bandlog.team.dto.response.TeamsResponse;
 import net.effize.bandlog.team.model.Member;
+import net.effize.bandlog.team.model.MemberRole;
 import net.effize.bandlog.team.model.Team;
 import net.effize.bandlog.team.model.TeamId;
 import net.effize.bandlog.team.model.User;
@@ -89,5 +90,18 @@ public class TeamQueryService {
                     );
                 }).toList()
         );
+    }
+
+    public boolean isUserLeaderOfTeam(long userId, long teamId) {
+        Team team = teamService.activeTeam(TeamId.of(teamId));
+        return teamService.membersOf(team).stream()
+                .filter(member -> member.userId().value() == userId)
+                .anyMatch(member -> member.role() == MemberRole.LEADER);
+    }
+
+    public boolean isMemberOfTeam(long userId, long teamId) {
+        Team team = teamService.activeTeam(TeamId.of(teamId));
+        return teamService.membersOf(team).stream()
+                .anyMatch(member -> member.userId().value() == userId);
     }
 }
