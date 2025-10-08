@@ -174,7 +174,10 @@ class RehearsalCommandUseCase(
 
     @Transactional
     fun deleteRehearsal(authUser: AuthUser, rehearsalId: Long) {
-        if (!teamAdapter.isUserLeaderOfTeam(authUser.id, rehearsalId)) {
+        val rehearsal = rehearsalRepository.findByIdOrNull(rehearsalId)
+            ?: throw IllegalArgumentException("Rehearsal with id $rehearsalId not found")
+
+        if (!teamAdapter.isUserLeaderOfTeam(authUser.id, rehearsal.teamId)) {
             throw IllegalStateException("Cannot delete rehearsal you are not leader of")
         }
 
@@ -183,12 +186,12 @@ class RehearsalCommandUseCase(
 
     @Transactional
     fun deleteRehearsalSong(authUser: AuthUser, rehearsalId: Long, rehearsalSongId: Long) {
-        if (!teamAdapter.isUserLeaderOfTeam(authUser.id, rehearsalId)) {
-            throw IllegalStateException("Cannot delete rehearsal song you are not leader of")
-        }
-
         val rehearsal = rehearsalRepository.findByIdOrNull(rehearsalId)
             ?: throw IllegalArgumentException("Rehearsal with id $rehearsalId not found")
+
+        if (!teamAdapter.isUserLeaderOfTeam(authUser.id, rehearsal.teamId)) {
+            throw IllegalStateException("Cannot delete rehearsal song you are not leader of")
+        }
 
         rehearsal.deleteSong(rehearsalSongId)
     }
@@ -200,12 +203,12 @@ class RehearsalCommandUseCase(
         rehearsalSongId: Long,
         rehearsalSongInstrumentId: Long
     ) {
-        if (!teamAdapter.isUserLeaderOfTeam(authUser.id, rehearsalId)) {
-            throw IllegalStateException("Cannot delete rehearsal song instrument you are not leader of")
-        }
-
         val rehearsal = rehearsalRepository.findByIdOrNull(rehearsalId)
             ?: throw IllegalArgumentException("Rehearsal with id $rehearsalId not found")
+
+        if (!teamAdapter.isUserLeaderOfTeam(authUser.id, rehearsal.teamId)) {
+            throw IllegalStateException("Cannot delete rehearsal song instrument you are not leader of")
+        }
 
         rehearsal.deleteSongInstrument(rehearsalSongId, rehearsalSongInstrumentId)
     }
