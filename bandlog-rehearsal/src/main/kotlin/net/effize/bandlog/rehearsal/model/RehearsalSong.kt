@@ -26,7 +26,7 @@ class RehearsalSong(
     val id: Long = 0L,
 
     @Column(name = "title")
-    private var title: String,
+    private var _title: String,
 
     @Column(name = "sort_order")
     private var _order: Int,
@@ -36,6 +36,8 @@ class RehearsalSong(
 ) {
     val instruments: List<RehearsalSongInstrument> = _instruments
 
+    val title: String
+        get() = _title
     val order: Int
         get() = _order
 
@@ -53,7 +55,7 @@ class RehearsalSong(
 
     constructor(title: String, order: Int) : this(
         id = 0L,
-        title = title,
+        _title = title,
         _order = order
     )
 
@@ -97,7 +99,7 @@ class RehearsalSong(
     }
 
     fun modifyTitle(title: String) {
-        this.title = title
+        this._title = title
     }
 
     fun modifyOrder(order: Int) {
