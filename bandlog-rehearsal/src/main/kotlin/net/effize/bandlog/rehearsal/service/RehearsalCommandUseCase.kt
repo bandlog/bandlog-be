@@ -5,12 +5,14 @@ import net.effize.bandlog.rehearsal.dto.request.AddRehearsalSongInstrumentReques
 import net.effize.bandlog.rehearsal.dto.request.AddRehearsalSongRequest
 import net.effize.bandlog.rehearsal.dto.request.AssignMemberToInstrumentRequest
 import net.effize.bandlog.rehearsal.dto.request.CreateRehearsalRequest
+import net.effize.bandlog.rehearsal.dto.request.ModifyRehearsalRequest
 import net.effize.bandlog.rehearsal.dto.request.ModifyRehearsalSongInstrumentRequest
 import net.effize.bandlog.rehearsal.dto.request.ModifyRehearsalSongRequest
 import net.effize.bandlog.rehearsal.dto.response.AddRehearsalSongInstrumentResponse
 import net.effize.bandlog.rehearsal.dto.response.AddRehearsalSongResponse
 import net.effize.bandlog.rehearsal.dto.response.AssignMemberToInstrumentResponse
 import net.effize.bandlog.rehearsal.dto.response.CreateRehearsalResponse
+import net.effize.bandlog.rehearsal.dto.response.ModifyRehearsalResponse
 import net.effize.bandlog.rehearsal.dto.response.ModifyRehearsalSongResponse
 import net.effize.bandlog.rehearsal.model.Rehearsal
 import net.effize.bandlog.rehearsal.repository.RehearsalRepository
@@ -41,6 +43,29 @@ class RehearsalCommandUseCase(
         val savedRehearsal = rehearsalRepository.save(newRehearsal)
 
         return CreateRehearsalResponse(savedRehearsal.id)
+    }
+
+    @Transactional
+    fun modifyRehearsal(
+        authUser: AuthUser,
+        rehearsalId: Long,
+        modifyRehearsalRequest: ModifyRehearsalRequest
+    ): ModifyRehearsalResponse {
+        if (!teamAdapter.isUserLeaderOfTeam(authUser.id, modifyRehearsalRequest.teamId)) {
+            throw IllegalStateException("Cannot create rehearsal for team you are not leader of")
+        }
+
+        val rehearsal = rehearsalRepository.findByIdOrNull(rehearsalId)
+            ?: throw IllegalArgumentException("Rehearsal with id $rehearsalId not found")
+
+        rehearsal.modifyRehearsal(
+            modifyRehearsalRequest.title,
+            modifyRehearsalRequest.description,
+            modifyRehearsalRequest.scheduledAt,
+            modifyRehearsalRequest.location
+        )
+
+        return ModifyRehearsalResponse(rehearsal.id)
     }
 
     @Transactional

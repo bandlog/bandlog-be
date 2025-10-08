@@ -26,21 +26,30 @@ class Rehearsal(
     val teamId: Long,
 
     @Column(name = "title")
-    val title: String,
+    private var _title: String,
 
     @Column(name = "description")
-    val description: String?,
+    private var _description: String?,
 
     @Column(name = "scheduled_at")
-    val scheduledAt: Instant,
+    private var _scheduledAt: Instant,
 
     @Column(name = "location")
-    val location: String?,
+    private var _location: String?,
 
     @OneToMany(mappedBy = "rehearsal", cascade = [CascadeType.ALL], orphanRemoval = true)
     private val _songs: MutableList<RehearsalSong> = mutableListOf(),
 ) {
-    val songs: List<RehearsalSong> = _songs
+    val title: String
+        get() = _title
+    val description: String?
+        get() = _description
+    val scheduledAt: Instant
+        get() = _scheduledAt
+    val location: String?
+        get() = _location
+    val songs: List<RehearsalSong>
+        get() = _songs
 
     @Column(name = "created_at", updatable = false)
     @CreatedDate
@@ -53,10 +62,10 @@ class Rehearsal(
     constructor(teamId: Long, title: String, description: String?, scheduledAt: Instant, location: String?) : this(
         id = 0L,
         teamId = teamId,
-        title = title,
-        description = description,
-        scheduledAt = scheduledAt,
-        location = location,
+        _title = title,
+        _description = description,
+        _scheduledAt = scheduledAt,
+        _location = location,
     )
 
     fun addSongWithTitle(title: String) {
@@ -73,6 +82,13 @@ class Rehearsal(
     fun assignMemberToInstrument(songId: Long, instrumentId: Long, memberId: Long) {
         val song = findSong(songId)
         song.assignMemberToInstrument(instrumentId, memberId)
+    }
+
+    fun modifyRehearsal(title: String, description: String?, scheduledAt: Instant, location: String?) {
+        this._title = title
+        this._description = description
+        this._scheduledAt = scheduledAt
+        this._location = location
     }
 
     fun modifySong(songId: Long, title: String, newOrder: Int) {

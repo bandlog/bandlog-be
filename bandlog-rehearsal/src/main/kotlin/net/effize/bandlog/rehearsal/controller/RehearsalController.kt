@@ -4,12 +4,14 @@ import net.effize.bandlog.rehearsal.dto.request.AddRehearsalSongInstrumentReques
 import net.effize.bandlog.rehearsal.dto.request.AddRehearsalSongRequest
 import net.effize.bandlog.rehearsal.dto.request.AssignMemberToInstrumentRequest
 import net.effize.bandlog.rehearsal.dto.request.CreateRehearsalRequest
+import net.effize.bandlog.rehearsal.dto.request.ModifyRehearsalRequest
 import net.effize.bandlog.rehearsal.dto.request.ModifyRehearsalSongInstrumentRequest
 import net.effize.bandlog.rehearsal.dto.request.ModifyRehearsalSongRequest
 import net.effize.bandlog.rehearsal.dto.response.AddRehearsalSongInstrumentResponse
 import net.effize.bandlog.rehearsal.dto.response.AddRehearsalSongResponse
 import net.effize.bandlog.rehearsal.dto.response.AssignMemberToInstrumentResponse
 import net.effize.bandlog.rehearsal.dto.response.CreateRehearsalResponse
+import net.effize.bandlog.rehearsal.dto.response.ModifyRehearsalResponse
 import net.effize.bandlog.rehearsal.dto.response.ModifyRehearsalSongResponse
 import net.effize.bandlog.rehearsal.service.RehearsalCommandUseCase
 import net.effize.bandlog.shared.auth.AuthUser
@@ -69,6 +71,19 @@ class RehearsalController(
             rehearsalSongId,
             rehearsalSongInstrumentId,
             assignMemberRequest
+        )
+    }
+
+    @PutMapping("/{rehearsalId}")
+    fun modifyRehearsal(
+        authUser: AuthUser,
+        @PathVariable rehearsalId: Long,
+        @RequestBody modifyRehearsalRequest: ModifyRehearsalRequest
+    ): ModifyRehearsalResponse {
+        return rehearsalCommandUseCase.modifyRehearsal(
+            authUser,
+            rehearsalId,
+            modifyRehearsalRequest
         )
     }
 
