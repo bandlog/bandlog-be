@@ -4,13 +4,20 @@ import net.effize.bandlog.rehearsal.dto.request.AddRehearsalSongInstrumentReques
 import net.effize.bandlog.rehearsal.dto.request.AddRehearsalSongRequest
 import net.effize.bandlog.rehearsal.dto.request.AssignMemberToInstrumentRequest
 import net.effize.bandlog.rehearsal.dto.request.CreateRehearsalRequest
+import net.effize.bandlog.rehearsal.dto.request.ModifyRehearsalSongRequest
 import net.effize.bandlog.rehearsal.dto.response.AddRehearsalSongInstrumentResponse
 import net.effize.bandlog.rehearsal.dto.response.AddRehearsalSongResponse
 import net.effize.bandlog.rehearsal.dto.response.AssignMemberToInstrumentResponse
 import net.effize.bandlog.rehearsal.dto.response.CreateRehearsalResponse
+import net.effize.bandlog.rehearsal.dto.response.ModifyRehearsalSongResponse
 import net.effize.bandlog.rehearsal.service.RehearsalCommandUseCase
 import net.effize.bandlog.shared.auth.AuthUser
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api/v1/rehearsal")
@@ -61,6 +68,21 @@ class RehearsalController(
             rehearsalSongId,
             rehearsalSongInstrumentId,
             assignMemberRequest
+        )
+    }
+
+    @PutMapping("/{rehearsalId}/song/{rehearsalSongId}")
+    fun modifyRehearsalSong(
+        authUser: AuthUser,
+        @PathVariable rehearsalId: Long,
+        @PathVariable rehearsalSongId: Long,
+        @RequestBody modifyRehearsalSongRequest: ModifyRehearsalSongRequest
+    ): ModifyRehearsalSongResponse {
+        return rehearsalCommandUseCase.modifyRehearsalSong(
+            authUser,
+            rehearsalId,
+            rehearsalSongId,
+            modifyRehearsalSongRequest
         )
     }
 }
