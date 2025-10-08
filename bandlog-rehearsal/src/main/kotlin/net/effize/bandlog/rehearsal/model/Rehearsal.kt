@@ -109,6 +109,17 @@ class Rehearsal(
         song.modifyInstrument(songInstrumentId, instrument)
     }
 
+    fun deleteSong(songId: Long) {
+        val song = findSong(songId)
+        reorderSongs(song, song.order, lastSongOrder())
+        _songs.remove(song)
+    }
+
+    fun deleteSongInstrument(songId: Long, songInstrumentId: Long) {
+        val song = findSong(songId)
+        song.deleteInstrument(songInstrumentId)
+    }
+
     private fun validateOrder(order: Int) {
         require(order in 1.._songs.size) {
             "Order must be between 1 and ${_songs.size}"

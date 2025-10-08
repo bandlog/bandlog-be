@@ -73,6 +73,12 @@ class RehearsalSong(
         instrument.modifyInstrument(instrumentName)
     }
 
+    fun deleteInstrument(instrumentId: Long) {
+        val instrument = _instruments.find { it.id == instrumentId }
+            ?: throw IllegalArgumentException("Rehearsal song instrument with id $instrumentId not found")
+        _instruments.remove(instrument)
+    }
+
     fun assignMemberToInstrument(instrumentId: Long, memberId: Long) {
         val instrument = _instruments.find { it.id == instrumentId }
             ?: throw IllegalArgumentException("Rehearsal song instrument with id $instrumentId not found")
