@@ -34,7 +34,8 @@ class RehearsalSong(
     @OneToMany(mappedBy = "rehearsalSong", cascade = [CascadeType.ALL], orphanRemoval = true)
     private val _instruments: MutableList<RehearsalSongInstrument> = mutableListOf(),
 ) {
-    val instruments: List<RehearsalSongInstrument> = _instruments
+    val instruments: List<RehearsalSongInstrument>
+        get() = _instruments.toList()
 
     val title: String
         get() = _title
