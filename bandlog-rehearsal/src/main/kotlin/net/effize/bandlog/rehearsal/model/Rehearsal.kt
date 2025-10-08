@@ -88,6 +88,11 @@ class Rehearsal(
         }
     }
 
+    fun modifySongInstrument(songId: Long, songInstrumentId: Long, instrument: String) {
+        val song = findSong(songId)
+        song.modifyInstrument(songInstrumentId, instrument)
+    }
+
     private fun validateOrder(order: Int) {
         require(order in 1.._songs.size) {
             "Order must be between 1 and ${_songs.size}"

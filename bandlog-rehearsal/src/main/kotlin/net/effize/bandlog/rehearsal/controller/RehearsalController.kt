@@ -4,6 +4,7 @@ import net.effize.bandlog.rehearsal.dto.request.AddRehearsalSongInstrumentReques
 import net.effize.bandlog.rehearsal.dto.request.AddRehearsalSongRequest
 import net.effize.bandlog.rehearsal.dto.request.AssignMemberToInstrumentRequest
 import net.effize.bandlog.rehearsal.dto.request.CreateRehearsalRequest
+import net.effize.bandlog.rehearsal.dto.request.ModifyRehearsalSongInstrumentRequest
 import net.effize.bandlog.rehearsal.dto.request.ModifyRehearsalSongRequest
 import net.effize.bandlog.rehearsal.dto.response.AddRehearsalSongInstrumentResponse
 import net.effize.bandlog.rehearsal.dto.response.AddRehearsalSongResponse
@@ -83,6 +84,23 @@ class RehearsalController(
             rehearsalId,
             rehearsalSongId,
             modifyRehearsalSongRequest
+        )
+    }
+
+    @PutMapping("/{rehearsalId}/song/{rehearsalSongId}/instrument/{rehearsalSongInstrumentId}")
+    fun modifyRehearsalSongInstrument(
+        authUser: AuthUser,
+        @PathVariable rehearsalId: Long,
+        @PathVariable rehearsalSongId: Long,
+        @PathVariable rehearsalSongInstrumentId: Long,
+        @RequestBody modifyRehearsalSongInstrumentRequest: ModifyRehearsalSongInstrumentRequest
+    ): ModifyRehearsalSongResponse {
+        return rehearsalCommandUseCase.modifyRehearsalSongInstrument(
+            authUser,
+            rehearsalId,
+            rehearsalSongId,
+            rehearsalSongInstrumentId,
+            modifyRehearsalSongInstrumentRequest
         )
     }
 }

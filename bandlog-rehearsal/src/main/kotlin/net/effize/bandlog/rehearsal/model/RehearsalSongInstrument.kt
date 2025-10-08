@@ -1,6 +1,15 @@
 package net.effize.bandlog.rehearsal.model
 
-import jakarta.persistence.*
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.EntityListeners
+import jakarta.persistence.FetchType
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.ManyToOne
+import jakarta.persistence.Table
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
@@ -15,7 +24,7 @@ class RehearsalSongInstrument(
     val id: Long = 0L,
 
     @Column(name = "instrument")
-    val instrument: String,
+    private var _instrument: String,
 
     @Column(name = "sort_order")
     val order: Int,
@@ -23,6 +32,9 @@ class RehearsalSongInstrument(
     @Column(name = "member_id")
     private var _memberId: Long? = null,
 ) {
+    val instrument: String
+        get() = _instrument
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rehearsal_song_id")
     private lateinit var rehearsalSong: RehearsalSong
@@ -44,5 +56,9 @@ class RehearsalSongInstrument(
 
     fun assignMember(memberId: Long) {
         this._memberId = memberId
+    }
+
+    fun modifyInstrument(newInstrument: String) {
+        this._instrument = newInstrument
     }
 }

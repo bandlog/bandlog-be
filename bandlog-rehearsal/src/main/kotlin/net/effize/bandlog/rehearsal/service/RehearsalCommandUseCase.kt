@@ -5,6 +5,7 @@ import net.effize.bandlog.rehearsal.dto.request.AddRehearsalSongInstrumentReques
 import net.effize.bandlog.rehearsal.dto.request.AddRehearsalSongRequest
 import net.effize.bandlog.rehearsal.dto.request.AssignMemberToInstrumentRequest
 import net.effize.bandlog.rehearsal.dto.request.CreateRehearsalRequest
+import net.effize.bandlog.rehearsal.dto.request.ModifyRehearsalSongInstrumentRequest
 import net.effize.bandlog.rehearsal.dto.request.ModifyRehearsalSongRequest
 import net.effize.bandlog.rehearsal.dto.response.AddRehearsalSongInstrumentResponse
 import net.effize.bandlog.rehearsal.dto.response.AddRehearsalSongResponse
@@ -96,6 +97,30 @@ class RehearsalCommandUseCase(
         rehearsal.addInstrumentToSong(rehearsalSongId, addRehearsalSongInstrumentRequest.instrument)
 
         return AddRehearsalSongInstrumentResponse(rehearsal.id)
+    }
+
+    @Transactional
+    fun modifyRehearsalSongInstrument(
+        authUser: AuthUser,
+        rehearsalId: Long,
+        rehearsalSongId: Long,
+        rehearsalSongInstrumentId: Long,
+        modifyRehearsalSongInstrumentRequest: ModifyRehearsalSongInstrumentRequest
+    ): ModifyRehearsalSongResponse {
+        if (!teamAdapter.isUserLeaderOfTeam(authUser.id, modifyRehearsalSongInstrumentRequest.teamId)) {
+            throw IllegalStateException("Cannot add instrument to rehearsal you are not leader of")
+        }
+
+        val rehearsal = rehearsalRepository.findByIdOrNull(rehearsalId)
+            ?: throw IllegalArgumentException("Rehearsal with id $rehearsalId not found")
+
+        rehearsal.modifySongInstrument(
+            rehearsalSongId,
+            rehearsalSongInstrumentId,
+            modifyRehearsalSongInstrumentRequest.instrument
+        )
+
+        return ModifyRehearsalSongResponse(rehearsal.id)
     }
 
     @Transactional
