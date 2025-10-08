@@ -1,6 +1,14 @@
 package net.effize.bandlog.rehearsal.model
 
-import jakarta.persistence.*
+import jakarta.persistence.CascadeType
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.EntityListeners
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
+import jakarta.persistence.OneToMany
+import jakarta.persistence.Table
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
@@ -65,6 +73,44 @@ class Rehearsal(
     fun assignMemberToInstrument(songId: Long, instrumentId: Long, memberId: Long) {
         val song = findSong(songId)
         song.assignMemberToInstrument(instrumentId, memberId)
+    }
+
+    fun modifySong(songId: Long, title: String, newOrder: Int) {
+        validateOrder(newOrder)
+
+        val song = findSong(songId)
+        val oldOrder = song.order
+
+        song.modifyTitle(title)
+
+        if (oldOrder != newOrder) {
+            reorderSongs(song, oldOrder, newOrder)
+        }
+    }
+
+    private fun validateOrder(order: Int) {
+        require(order in 1.._songs.size) {
+            "Order must be between 1 and ${_songs.size}"
+        }
+    }
+
+    /**
+     * newOrder 값을 기준으로 기존의 값들을 재정렬한다.
+     * 기존 값들을 적절하게 Shift 하여 newOrder가 들어갈 공간을 만들어주는 방식
+     */
+    private fun reorderSongs(targetSong: RehearsalSong, oldOrder: Int, newOrder: Int) {
+        when {
+            newOrder < oldOrder -> {
+                _songs.filter { it.order in newOrder..<oldOrder }
+                    .forEach { it.modifyOrder(it.order + 1) }
+            }
+
+            newOrder > oldOrder -> {
+                _songs.filter { it.order in (oldOrder + 1)..newOrder }
+                    .forEach { it.modifyOrder(it.order - 1) }
+            }
+        }
+        targetSong.modifyOrder(newOrder)
     }
 
     private fun lastSongOrder(): Int {
