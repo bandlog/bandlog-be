@@ -16,7 +16,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.Instant
 
 @Entity
-@Table(name = "rehearsal_song_instrument")
+@Table(name = "rehearsal_song_instruments")
 @EntityListeners(AuditingEntityListener::class)
 class RehearsalSongInstrument(
     @Id
