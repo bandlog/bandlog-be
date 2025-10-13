@@ -1,4 +1,4 @@
-package net.effize.bandlog.rehearsal.controller
+package net.effize.bandlog.rehearsal.adapter.`in`
 
 import net.effize.bandlog.rehearsal.dto.request.AddRehearsalSongInstrumentRequest
 import net.effize.bandlog.rehearsal.dto.request.AddRehearsalSongRequest
