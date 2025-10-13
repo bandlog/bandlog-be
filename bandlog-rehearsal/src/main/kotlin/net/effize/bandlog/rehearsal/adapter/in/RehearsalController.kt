@@ -1,5 +1,6 @@
 package net.effize.bandlog.rehearsal.adapter.`in`
 
+import net.effize.bandlog.rehearsal.application.RehearsalCommandUseCase
 import net.effize.bandlog.rehearsal.dto.request.AddRehearsalSongInstrumentRequest
 import net.effize.bandlog.rehearsal.dto.request.AddRehearsalSongRequest
 import net.effize.bandlog.rehearsal.dto.request.AssignMemberToInstrumentRequest
@@ -13,9 +14,6 @@ import net.effize.bandlog.rehearsal.dto.response.AssignMemberToInstrumentRespons
 import net.effize.bandlog.rehearsal.dto.response.CreateRehearsalResponse
 import net.effize.bandlog.rehearsal.dto.response.ModifyRehearsalResponse
 import net.effize.bandlog.rehearsal.dto.response.ModifyRehearsalSongResponse
-import net.effize.bandlog.rehearsal.service.RehearsalCommandUseCase
-import net.effize.bandlog.rehearsal.service.RehearsalSongCommandUseCase
-import net.effize.bandlog.rehearsal.service.RehearsalSongInstrumentCommandUseCase
 import net.effize.bandlog.shared.auth.AuthUser
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -29,8 +27,6 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/v1/rehearsal")
 class RehearsalController(
     private val rehearsalCommandUseCase: RehearsalCommandUseCase,
-    private val rehearsalSongCommandUseCase: RehearsalSongCommandUseCase,
-    private val rehearsalSongInstrumentCommandUseCase: RehearsalSongInstrumentCommandUseCase
 ) {
 
     @PostMapping
@@ -44,7 +40,7 @@ class RehearsalController(
         @PathVariable rehearsalId: Long,
         @RequestBody addRehearsalSongRequest: AddRehearsalSongRequest
     ): AddRehearsalSongResponse {
-        return rehearsalSongCommandUseCase.addRehearsalSong(authUser, rehearsalId, addRehearsalSongRequest)
+        return rehearsalCommandUseCase.addRehearsalSong(authUser, rehearsalId, addRehearsalSongRequest)
     }
 
     @PostMapping("/{rehearsalId}/song/{rehearsalSongId}/instrument")
@@ -54,7 +50,7 @@ class RehearsalController(
         @PathVariable rehearsalSongId: Long,
         @RequestBody addRehearsalSongInstrumentRequest: AddRehearsalSongInstrumentRequest
     ): AddRehearsalSongInstrumentResponse {
-        return rehearsalSongInstrumentCommandUseCase.addRehearsalSongInstrument(
+        return rehearsalCommandUseCase.addRehearsalSongInstrument(
             authUser,
             rehearsalId,
             rehearsalSongId,
@@ -70,7 +66,7 @@ class RehearsalController(
         @PathVariable rehearsalSongInstrumentId: Long,
         @RequestBody assignMemberRequest: AssignMemberToInstrumentRequest
     ): AssignMemberToInstrumentResponse {
-        return rehearsalSongInstrumentCommandUseCase.assignMember(
+        return rehearsalCommandUseCase.assignMember(
             authUser,
             rehearsalId,
             rehearsalSongId,
@@ -99,7 +95,7 @@ class RehearsalController(
         @PathVariable rehearsalSongId: Long,
         @RequestBody modifyRehearsalSongRequest: ModifyRehearsalSongRequest
     ): ModifyRehearsalSongResponse {
-        return rehearsalSongCommandUseCase.modifyRehearsalSong(
+        return rehearsalCommandUseCase.modifyRehearsalSong(
             authUser,
             rehearsalId,
             rehearsalSongId,
@@ -115,7 +111,7 @@ class RehearsalController(
         @PathVariable rehearsalSongInstrumentId: Long,
         @RequestBody modifyRehearsalSongInstrumentRequest: ModifyRehearsalSongInstrumentRequest
     ): ModifyRehearsalSongResponse {
-        return rehearsalSongInstrumentCommandUseCase.modifyRehearsalSongInstrument(
+        return rehearsalCommandUseCase.modifyRehearsalSongInstrument(
             authUser,
             rehearsalId,
             rehearsalSongId,
@@ -131,7 +127,7 @@ class RehearsalController(
 
     @DeleteMapping("/{rehearsalId}/song/{rehearsalSongId}")
     fun deleteRehearsalSong(authUser: AuthUser, @PathVariable rehearsalId: Long, @PathVariable rehearsalSongId: Long) {
-        rehearsalSongCommandUseCase.deleteRehearsalSong(authUser, rehearsalId, rehearsalSongId)
+        rehearsalCommandUseCase.deleteRehearsalSong(authUser, rehearsalId, rehearsalSongId)
     }
 
     @DeleteMapping("/{rehearsalId}/song/{rehearsalSongId}/instrument/{rehearsalSongInstrumentId}")
@@ -141,7 +137,7 @@ class RehearsalController(
         @PathVariable rehearsalSongId: Long,
         @PathVariable rehearsalSongInstrumentId: Long,
     ) {
-        rehearsalSongInstrumentCommandUseCase.deleteRehearsalSongInstrument(
+        rehearsalCommandUseCase.deleteRehearsalSongInstrument(
             authUser,
             rehearsalId,
             rehearsalSongId,
