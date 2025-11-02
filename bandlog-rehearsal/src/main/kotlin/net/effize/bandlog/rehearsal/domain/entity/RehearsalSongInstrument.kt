@@ -1,4 +1,4 @@
-package net.effize.bandlog.rehearsal.model
+package net.effize.bandlog.rehearsal.domain.entity
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
