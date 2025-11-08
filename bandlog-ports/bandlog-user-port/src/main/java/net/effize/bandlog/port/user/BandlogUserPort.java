@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface BandlogUserPort {
     List<BandlogUserResponse> findAllByIdIn(List<Long> ids);
+
+    BandlogUserResponse findById(Long id);
 }
