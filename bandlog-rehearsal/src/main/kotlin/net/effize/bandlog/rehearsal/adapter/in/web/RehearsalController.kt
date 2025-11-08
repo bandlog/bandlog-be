@@ -13,9 +13,13 @@ import net.effize.bandlog.rehearsal.adapter.`in`.web.response.AssignMemberToInst
 import net.effize.bandlog.rehearsal.adapter.`in`.web.response.CreateRehearsalResponse
 import net.effize.bandlog.rehearsal.adapter.`in`.web.response.ModifyRehearsalResponse
 import net.effize.bandlog.rehearsal.adapter.`in`.web.response.ModifyRehearsalSongResponse
+import net.effize.bandlog.rehearsal.adapter.`in`.web.response.RehearsalResponse
+import net.effize.bandlog.rehearsal.adapter.`in`.web.response.RehearsalsResponse
 import net.effize.bandlog.rehearsal.application.RehearsalCommandUseCase
+import net.effize.bandlog.rehearsal.application.RehearsalQueryUseCase
 import net.effize.bandlog.shared.auth.AuthUser
 import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
@@ -26,8 +30,18 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/v1/rehearsal")
 class RehearsalController(
+    private val rehearsalQueryUseCase: RehearsalQueryUseCase,
     private val rehearsalCommandUseCase: RehearsalCommandUseCase,
 ) {
+    @GetMapping
+    fun getRehearsals(authUser: AuthUser): RehearsalsResponse {
+        return rehearsalQueryUseCase.rehearsalsOf(authUser)
+    }
+
+    @GetMapping("/{rehearsalId}")
+    fun getRehearsalDetail(authUser: AuthUser, @PathVariable rehearsalId: Long): RehearsalResponse {
+        return rehearsalQueryUseCase.rehearsalDetail(authUser, rehearsalId)
+    }
 
     @PostMapping
     fun createRehearsal(authUser: AuthUser, createRehearsalRequest: CreateRehearsalRequest): CreateRehearsalResponse {

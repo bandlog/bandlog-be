@@ -38,6 +38,9 @@ class RehearsalSongInstrument(
     val order: Int
         get() = _order
 
+    val memberId: Long?
+        get() = _memberId
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rehearsal_song_id")
     private var rehearsalSong: RehearsalSong? = null

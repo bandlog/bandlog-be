@@ -58,4 +58,13 @@ public class UserService {
                         user.nickname().value()
                 )).toList();
     }
+
+    public UserResponse findById(UserId id) {
+        return userRepository.findById(id.value()).map(user -> new UserResponse(
+                user.id().value(),
+                user.supabaseUserId().value(),
+                user.email().value(),
+                user.nickname().value()
+        )).orElseThrow();
+    }
 }

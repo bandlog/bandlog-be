@@ -4,6 +4,7 @@ import net.effize.bandlog.team.adapter.out.UserAdapter;
 import net.effize.bandlog.team.dto.response.TeamInfoResponse;
 import net.effize.bandlog.team.dto.response.TeamsResponse;
 import net.effize.bandlog.team.model.Member;
+import net.effize.bandlog.team.model.MemberId;
 import net.effize.bandlog.team.model.MemberRole;
 import net.effize.bandlog.team.model.Team;
 import net.effize.bandlog.team.model.TeamId;
@@ -103,5 +104,15 @@ public class TeamQueryService {
         Team team = teamService.activeTeam(TeamId.of(teamId));
         return teamService.membersOf(team).stream()
                 .anyMatch(member -> member.userId().value() == userId);
+    }
+
+    public List<Long> teamsOfUser(long userId) {
+        List<Team> teams = teamService.teamsOfUser(new UserId(userId));
+        return teams.stream().map(team -> team.id().value()).toList();
+    }
+
+    public String nicknameOfMember(long memberId) {
+        Member member = teamService.memberOf(new MemberId(memberId));
+        return userAdapter.findById(member.userId()).nickname();
     }
 }

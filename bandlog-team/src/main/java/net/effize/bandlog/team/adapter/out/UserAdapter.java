@@ -1,6 +1,7 @@
 package net.effize.bandlog.team.adapter.out;
 
 import net.effize.bandlog.port.user.BandlogUserPort;
+import net.effize.bandlog.port.user.dto.BandlogUserResponse;
 import net.effize.bandlog.team.model.User;
 import net.effize.bandlog.team.model.UserId;
 import org.springframework.stereotype.Component;
@@ -22,5 +23,14 @@ public class UserAdapter {
                         userResponse.email(),
                         userResponse.nickname()
                 )).toList();
+    }
+
+    public User findById(UserId id) {
+        BandlogUserResponse userResponse = bandlogUserPort.findById(id.value());
+        return new User(
+                new UserId(userResponse.id()),
+                userResponse.email(),
+                userResponse.nickname()
+        );
     }
 }

@@ -1,6 +1,7 @@
 package net.effize.bandlog.team.service;
 
 import net.effize.bandlog.team.model.Member;
+import net.effize.bandlog.team.model.MemberId;
 import net.effize.bandlog.team.model.MemberRole;
 import net.effize.bandlog.team.model.Team;
 import net.effize.bandlog.team.model.TeamId;
@@ -44,5 +45,10 @@ public class TeamService {
 
     public List<Team> teamsOfUser(UserId userId) {
         return teamRepository.findAllByMembersUserId(userId.value());
+    }
+
+    public Member memberOf(MemberId id) {
+        return memberRepository.findById(id.value())
+                .orElseThrow();
     }
 }

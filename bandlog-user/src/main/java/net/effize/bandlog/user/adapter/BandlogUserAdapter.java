@@ -3,6 +3,7 @@ package net.effize.bandlog.user.adapter;
 import net.effize.bandlog.port.user.BandlogAuthUserPort;
 import net.effize.bandlog.port.user.BandlogUserPort;
 import net.effize.bandlog.port.user.dto.BandlogUserResponse;
+import net.effize.bandlog.user.dto.response.UserResponse;
 import net.effize.bandlog.user.model.Email;
 import net.effize.bandlog.user.model.SupabaseUserId;
 import net.effize.bandlog.user.model.UserId;
@@ -29,6 +30,17 @@ public class BandlogUserAdapter implements BandlogUserPort, BandlogAuthUserPort 
                         userResponse.email(),
                         userResponse.nickname()
                 )).toList();
+    }
+
+    @Override
+    public BandlogUserResponse findById(Long id) {
+        UserResponse userResponse = userService.findById(new UserId(id));
+        return new BandlogUserResponse(
+                userResponse.id(),
+                userResponse.supabaseUserId(),
+                userResponse.email(),
+                userResponse.nickname()
+        );
     }
 
     @Override
