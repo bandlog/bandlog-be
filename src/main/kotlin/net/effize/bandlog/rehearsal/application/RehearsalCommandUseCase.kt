@@ -1,5 +1,7 @@
 package net.effize.bandlog.rehearsal.application
 
+import net.effize.bandlog.common.auth.AuthUser
+import net.effize.bandlog.common.id.UserId
 import net.effize.bandlog.rehearsal.adapter.`in`.web.request.AddRehearsalSongInstrumentRequest
 import net.effize.bandlog.rehearsal.adapter.`in`.web.request.AddRehearsalSongRequest
 import net.effize.bandlog.rehearsal.adapter.`in`.web.request.AssignMemberToInstrumentRequest
@@ -14,9 +16,8 @@ import net.effize.bandlog.rehearsal.adapter.`in`.web.response.CreateRehearsalRes
 import net.effize.bandlog.rehearsal.adapter.`in`.web.response.ModifyRehearsalResponse
 import net.effize.bandlog.rehearsal.adapter.`in`.web.response.ModifyRehearsalSongResponse
 import net.effize.bandlog.rehearsal.adapter.out.persistence.RehearsalRepository
-import net.effize.bandlog.rehearsal.adapter.out.team.TeamAdapter
+import net.effize.bandlog.rehearsal.application.port.TeamInfoPort
 import net.effize.bandlog.rehearsal.domain.entity.Rehearsal
-import net.effize.bandlog.shared.auth.AuthUser
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -24,11 +25,11 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class RehearsalCommandUseCase(
     private val rehearsalRepository: RehearsalRepository,
-    private val teamAdapter: TeamAdapter
+    private val teamInfoPort: TeamInfoPort
 ) {
     @Transactional
     fun createRehearsal(authUser: AuthUser, createRehearsalRequest: CreateRehearsalRequest): CreateRehearsalResponse {
-        if (!teamAdapter.isUserLeaderOfTeam(authUser.id, createRehearsalRequest.teamId)) {
+        if (!teamInfoPort.isUserLeaderOfTeam(UserId(authUser.id), createRehearsalRequest.teamId)) {
             throw IllegalStateException("Cannot create rehearsal for team you are not leader of")
         }
 
@@ -51,7 +52,7 @@ class RehearsalCommandUseCase(
         rehearsalId: Long,
         modifyRehearsalRequest: ModifyRehearsalRequest
     ): ModifyRehearsalResponse {
-        if (!teamAdapter.isUserLeaderOfTeam(authUser.id, modifyRehearsalRequest.teamId)) {
+        if (!teamInfoPort.isUserLeaderOfTeam(UserId(authUser.id), modifyRehearsalRequest.teamId)) {
             throw IllegalStateException("Cannot create rehearsal for team you are not leader of")
         }
 
@@ -74,7 +75,7 @@ class RehearsalCommandUseCase(
         val rehearsal = rehearsalRepository.findByIdOrNull(rehearsalId)
             ?: throw IllegalArgumentException("Rehearsal with id $rehearsalId not found")
 
-        if (!teamAdapter.isUserLeaderOfTeam(authUser.id, rehearsal.teamId)) {
+        if (!teamInfoPort.isUserLeaderOfTeam(UserId(authUser.id), rehearsal.teamId)) {
             throw IllegalStateException("Cannot delete rehearsal you are not leader of")
         }
 
@@ -88,7 +89,7 @@ class RehearsalCommandUseCase(
         rehearsalId: Long,
         addRehearsalSongRequest: AddRehearsalSongRequest
     ): AddRehearsalSongResponse {
-        if (!teamAdapter.isUserLeaderOfTeam(authUser.id, addRehearsalSongRequest.teamId)) {
+        if (!teamInfoPort.isUserLeaderOfTeam(UserId(authUser.id), addRehearsalSongRequest.teamId)) {
             throw IllegalStateException("Cannot add song to rehearsal you are not leader of")
         }
 
@@ -107,7 +108,7 @@ class RehearsalCommandUseCase(
         rehearsalSongId: Long,
         modifyRehearsalSongRequest: ModifyRehearsalSongRequest
     ): ModifyRehearsalSongResponse {
-        if (!teamAdapter.isUserLeaderOfTeam(authUser.id, modifyRehearsalSongRequest.teamId)) {
+        if (!teamInfoPort.isUserLeaderOfTeam(UserId(authUser.id), modifyRehearsalSongRequest.teamId)) {
             throw IllegalStateException("Cannot add song to rehearsal you are not leader of")
         }
 
@@ -124,7 +125,7 @@ class RehearsalCommandUseCase(
         val rehearsal = rehearsalRepository.findByIdOrNull(rehearsalId)
             ?: throw IllegalArgumentException("Rehearsal with id $rehearsalId not found")
 
-        if (!teamAdapter.isUserLeaderOfTeam(authUser.id, rehearsal.teamId)) {
+        if (!teamInfoPort.isUserLeaderOfTeam(UserId(authUser.id), rehearsal.teamId)) {
             throw IllegalStateException("Cannot delete rehearsal song you are not leader of")
         }
 
@@ -138,7 +139,7 @@ class RehearsalCommandUseCase(
         rehearsalSongId: Long,
         addRehearsalSongInstrumentRequest: AddRehearsalSongInstrumentRequest
     ): AddRehearsalSongInstrumentResponse {
-        if (!teamAdapter.isUserLeaderOfTeam(authUser.id, addRehearsalSongInstrumentRequest.teamId)) {
+        if (!teamInfoPort.isUserLeaderOfTeam(UserId(authUser.id), addRehearsalSongInstrumentRequest.teamId)) {
             throw IllegalStateException("Cannot add instrument to rehearsal you are not leader of")
         }
 
@@ -158,7 +159,7 @@ class RehearsalCommandUseCase(
         rehearsalSongInstrumentId: Long,
         modifyRehearsalSongInstrumentRequest: ModifyRehearsalSongInstrumentRequest
     ): ModifyRehearsalSongResponse {
-        if (!teamAdapter.isUserLeaderOfTeam(authUser.id, modifyRehearsalSongInstrumentRequest.teamId)) {
+        if (!teamInfoPort.isUserLeaderOfTeam(UserId(authUser.id), modifyRehearsalSongInstrumentRequest.teamId)) {
             throw IllegalStateException("Cannot add instrument to rehearsal you are not leader of")
         }
 
@@ -186,7 +187,7 @@ class RehearsalCommandUseCase(
         val rehearsal = rehearsalRepository.findByIdOrNull(rehearsalId)
             ?: throw IllegalArgumentException("Rehearsal with id $rehearsalId not found")
 
-        if (!teamAdapter.isUserLeaderOfTeam(authUser.id, rehearsal.teamId)) {
+        if (!teamInfoPort.isUserLeaderOfTeam(UserId(authUser.id), rehearsal.teamId)) {
             throw IllegalStateException("Cannot delete rehearsal song instrument you are not leader of")
         }
 
@@ -201,10 +202,10 @@ class RehearsalCommandUseCase(
         rehearsalSongInstrumentId: Long,
         assignMemberRequest: AssignMemberToInstrumentRequest
     ): AssignMemberToInstrumentResponse {
-        if (!teamAdapter.isUserLeaderOfTeam(authUser.id, assignMemberRequest.teamId)) {
+        if (!teamInfoPort.isUserLeaderOfTeam(UserId(authUser.id), assignMemberRequest.teamId)) {
             throw IllegalStateException("Cannot assign member to rehearsal you are not leader of")
         }
-        if (!teamAdapter.isMemberOfTeam(assignMemberRequest.memberId, assignMemberRequest.teamId)) {
+        if (!teamInfoPort.isMemberOfTeam(assignMemberRequest.memberId, assignMemberRequest.teamId)) {
             throw IllegalStateException("Cannot assign member to rehearsal you are not a member of")
         }
 

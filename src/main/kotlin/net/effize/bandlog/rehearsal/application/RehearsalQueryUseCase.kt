@@ -1,21 +1,22 @@
 package net.effize.bandlog.rehearsal.application
 
+import net.effize.bandlog.common.auth.AuthUser
+import net.effize.bandlog.common.id.UserId
 import net.effize.bandlog.rehearsal.adapter.`in`.web.response.RehearsalResponse
 import net.effize.bandlog.rehearsal.adapter.`in`.web.response.RehearsalsResponse
 import net.effize.bandlog.rehearsal.adapter.out.persistence.RehearsalRepository
-import net.effize.bandlog.rehearsal.adapter.out.team.TeamAdapter
-import net.effize.bandlog.shared.auth.AuthUser
+import net.effize.bandlog.rehearsal.application.port.TeamInfoPort
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
 class RehearsalQueryUseCase(
     private val rehearsalRepository: RehearsalRepository,
-    private val teamAdapter: TeamAdapter
+    private val teamInfoPort: TeamInfoPort
 ) {
 
     fun rehearsalsOf(authUser: AuthUser): RehearsalsResponse {
-        val teamIds = teamAdapter.teamIdsOfUser(authUser.id)
+        val teamIds = teamInfoPort.getTeamIdsOfUser(UserId(authUser.id))
 
         val rehearsals = rehearsalRepository.findByTeamIdIn(teamIds)
 
@@ -33,7 +34,7 @@ class RehearsalQueryUseCase(
     }
 
     fun rehearsalDetail(authUser: AuthUser, rehearsalId: Long): RehearsalResponse {
-        val teamIds = teamAdapter.teamIdsOfUser(authUser.id)
+        val teamIds = teamInfoPort.getTeamIdsOfUser(UserId(authUser.id))
         val rehearsal = rehearsalRepository.findByIdOrNull(rehearsalId)
             ?: throw IllegalArgumentException("Rehearsal with id $rehearsalId not found")
         if (!teamIds.contains(rehearsal.teamId)) {
@@ -56,7 +57,7 @@ class RehearsalQueryUseCase(
                         RehearsalResponse.Song.InstrumentAssignment(
                             instrument = instrument.instrument,
                             assignee = instrument.memberId?.let {
-                                teamAdapter.nicknameOfMember(it)
+                                teamInfoPort.getNicknameOfMember(it)
                             },
                             order = instrument.order
                         )

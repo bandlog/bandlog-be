@@ -1,5 +1,6 @@
 package net.effize.bandlog.rehearsal.adapter.`in`.web
 
+import net.effize.bandlog.common.auth.AuthUser
 import net.effize.bandlog.rehearsal.adapter.`in`.web.request.AddRehearsalSongInstrumentRequest
 import net.effize.bandlog.rehearsal.adapter.`in`.web.request.AddRehearsalSongRequest
 import net.effize.bandlog.rehearsal.adapter.`in`.web.request.AssignMemberToInstrumentRequest
@@ -17,7 +18,6 @@ import net.effize.bandlog.rehearsal.adapter.`in`.web.response.RehearsalResponse
 import net.effize.bandlog.rehearsal.adapter.`in`.web.response.RehearsalsResponse
 import net.effize.bandlog.rehearsal.application.RehearsalCommandUseCase
 import net.effize.bandlog.rehearsal.application.RehearsalQueryUseCase
-import net.effize.bandlog.shared.auth.AuthUser
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
